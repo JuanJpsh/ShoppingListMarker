@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
+  mobileQuery: MediaQueryList;
 
+  constructor(media: MediaMatcher) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+  }
 }
