@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,7 +10,11 @@ import { MediaMatcher } from '@angular/cdk/layout';
 export class DashboardComponent {
   mobileQuery: MediaQueryList;
 
-  constructor(media: MediaMatcher) {
+  constructor(media: MediaMatcher, private authSvc: AuthService) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
+  }
+
+  onLogout(){
+    this.authSvc.logout();
   }
 }
