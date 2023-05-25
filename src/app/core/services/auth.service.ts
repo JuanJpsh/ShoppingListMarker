@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Credentials } from '../../pages/auth/models/credentials';
-import { map, tap } from 'rxjs';
+import { map, take } from 'rxjs';
 import { UserResponse } from '../../pages/auth/models/userResponse';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { Router } from '@angular/router';
@@ -21,13 +21,14 @@ export class AuthService {
 
   login(credentials: Credentials) {
     return this.http.get<UserResponse[]>(
-      `${this.url}?email=${credentials.email}&password=${credentials.password}`
+      `${this.url}?username=${credentials.username}&password=${credentials.password}`
     ).pipe(
+      take(1),
       map((resp: UserResponse[]) => {
         if (resp.length == 0)
           return false
         this.dataStorageSvc.saveData("userId", resp[0].id.toString());
-        this.dataStorageSvc.saveData("userName", resp[0].name)
+        this.dataStorageSvc.saveData("fullname", resp[0].fullname)
         return true
       })
     )
@@ -35,7 +36,7 @@ export class AuthService {
 
   logout() {
     this.dataStorageSvc.deleteData("userId")
-    this.dataStorageSvc.deleteData("userName")
+    this.dataStorageSvc.deleteData("fullname")
     this.router.navigate([''])
   }
 }

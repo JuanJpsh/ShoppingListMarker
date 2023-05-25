@@ -1,6 +1,6 @@
 export interface UserResponse {
     id: number
-    name: string
-    email: string
+    fullname: string
+    username: string
     password: string
 }

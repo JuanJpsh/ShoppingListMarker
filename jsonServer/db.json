@@ -1,5 +1,10 @@
 {
-    "users": [
-      { "id": 1, "name": "admin", "email": "admin@email.com", "password": "12345678" }
-    ]
-  }
+  "users": [
+    {
+      "id": 1,
+      "fullname": "Administrador de aplicacion",
+      "username": "Admin123",
+      "password": "12345678"
+    }
+  ]
+}

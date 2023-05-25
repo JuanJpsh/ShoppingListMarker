@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { EmpAddEditComponent } from 'src/app/emp-add-edit/emp-add-edit.component';
+import { EmpAddEditComponent } from 'src/app/pages/home/components/emp-add-edit/emp-add-edit.component';
 
 
 

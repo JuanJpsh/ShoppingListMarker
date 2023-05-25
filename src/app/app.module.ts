@@ -7,16 +7,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutsModule } from './layouts/layouts.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialogModule } from '@angular/material/dialog';
-import { EmpAddEditComponent } from './emp-add-edit/emp-add-edit.component'
-import { MatSelectModule } from '@angular/material/select';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EmpAddEditComponent
   ],
   imports: [
     BrowserModule,
@@ -24,11 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     LayoutsModule,
     HttpClientModule,
-    MatSnackBarModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatSelectModule,
-    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
