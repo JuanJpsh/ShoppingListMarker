@@ -1,0 +1,10 @@
+.container-page {
+    background-color: #939393;
+    height: 100%;
+    display: flex;
+    /* se utiliza flexbox para alinear verticalmente */
+    justify-content: center;
+    /* se centra horizontalmente */
+    align-items: center;
+    /* se centra verticalmente */
+}
