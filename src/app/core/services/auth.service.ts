@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Credentials } from '../../pages/auth/models/credentials';
-import { map, take } from 'rxjs';
+import { map, take, tap } from 'rxjs';
 import { UserResponse } from '../../pages/auth/models/userResponse';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { Router } from '@angular/router';
