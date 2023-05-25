@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Credentials } from '../../pages/auth/models/credentials';
-import { map, tap } from 'rxjs';
+import { map, take, tap } from 'rxjs';
 import { UserResponse } from '../../pages/auth/models/userResponse';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { Router } from '@angular/router';
@@ -23,6 +23,7 @@ export class AuthService {
     return this.http.get<UserResponse[]>(
       `${this.url}?username=${credentials.username}&password=${credentials.password}`
     ).pipe(
+      take(1),
       map((resp: UserResponse[]) => {
         if (resp.length == 0)
           return false

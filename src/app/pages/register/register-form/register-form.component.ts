@@ -26,32 +26,38 @@ export class RegisterFormComponent {
   getErrorMessage(contolName: string) {
     const controlForm = this.userDataForm.get(contolName);
     if (!controlForm) throw new Error(`contol name ${contolName} not found in the formGoup`)
-    if (controlForm.getError('notEqualPassword'))
-      return "La contraseña no coincide"
-    else if (controlForm.getError('required'))
+
+    if (controlForm.getError('required'))
       return "Este campo es obligatorio"
+    else if (controlForm.getError('notEqualPassword'))
+      return "La contraseña no coincide"
     else if (controlForm.getError("minlength"))
       return "Este campo debe tener al menos 8 carácteres"
     else if (controlForm.getError("maxlength"))
       return "Este campo debe tener maximo 30 carácteres"
+    else if (controlForm.getError("existUsername"))
+      return "Este nombre de usuario ya existe"
     return ""
   }
 
   submit() {
-    if (!this.userDataForm.valid)
+    if (
+      this.userDataForm.invalid
+      && !this.userDataForm.get("username")?.hasError("existUsername")
+    )
       return
     const { fullname, username, password } = this.userDataForm.value
-    console.log(fullname)
-    console.log(username) 
-    console.log(password) 
     this.registerSvc.register({
       fullname,
       username,
       password
     }).subscribe((resp) => {
-      if (resp)
+      if (resp){
+        this.snackBarSvc.dismiss();
         this.router.navigate(['home'])
+      }
       else {
+        this.userDataForm.get("username")?.setErrors({ existUsername: true })
         this.snackBarSvc.open(
           'Nombre de usuario ya existente, Intentelo con otro nuevamente',
           undefined,
@@ -66,14 +72,14 @@ export class RegisterFormComponent {
   private inituserDataForm() {
     return new FormGroup({
       fullname: new FormControl(null, [
-        Validators.required, 
+        Validators.required,
         Validators.minLength(8),
         Validators.maxLength(30)
       ]),
       username: new FormControl(null, [
-        Validators.required, 
+        Validators.required,
         Validators.minLength(8),
-        Validators.maxLength(30)
+        Validators.maxLength(30),
       ]),
       password: new FormControl(null, [
         Validators.required,

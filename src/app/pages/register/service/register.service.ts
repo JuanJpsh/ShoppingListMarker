@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { UserDataRegister, UserDataRegisterResponse } from '../models/userDataRegister';
 import { UserResponse } from '../../auth/models/userResponse';
-import { map, mergeMap, of } from 'rxjs';
+import { map, mergeMap, of, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,7 @@ export class RegisterService {
     return this.http.get<UserResponse[]>(
       `${this.url}?username=${userDataRegister.username}`
     ).pipe(
+      take(1),
       mergeMap((resp: UserResponse[]) => {
         if (resp.length != 0)
           return of(null)

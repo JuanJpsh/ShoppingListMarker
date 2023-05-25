@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class LoginComponent implements OnInit {
   credentialsForm!: FormGroup;
+  correctCredentials!: boolean;
 
   constructor(
     private authSvc: AuthService,
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.credentialsForm = this.initCredentialsForm();
+    this.correctCredentials = true
   }
 
   getErrorMessage(contolName: string) {
@@ -31,16 +33,27 @@ export class LoginComponent implements OnInit {
       return "Este campo debe tener al menos 8 carácteres"
     else if (controlForm.getError("maxlength"))
       return "Este campo debe tener maximo 30 carácteres"
+    else if (controlForm.getError("incorrectCredentials"))
+      return ""
     return ""
   }
 
   submit() {
-    if (!this.credentialsForm.valid)
+    if (
+      this.credentialsForm.invalid
+      && !this.credentialsForm.get("username")?.hasError("incorrectCredentials")
+      && !this.credentialsForm.get("password")?.hasError("incorrectCredentials")
+    )
       return
     this.authSvc.login(this.credentialsForm.value).subscribe((resp) => {
-      if (resp)
+      if (resp) {
+        this.snackBarSvc.dismiss();
         this.router.navigate(['home'])
+      }
       else {
+        this.correctCredentials = false;
+        this.credentialsForm.get("username")?.setErrors({ incorrectCredentials: true })
+        this.credentialsForm.get("password")?.setErrors({ incorrectCredentials: true })
         this.snackBarSvc.open(
           'Credenciales invalidas, Intentelo nuevamente',
           undefined,
@@ -57,7 +70,7 @@ export class LoginComponent implements OnInit {
       username: new FormControl(null, [
         Validators.required,
         Validators.minLength(8),
-        Validators.maxLength(30)
+        Validators.maxLength(30),
       ]),
       password: new FormControl(null, [
         Validators.required,
