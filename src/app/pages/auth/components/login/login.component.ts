@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authSvc: AuthService,
-    private route: Router,
+    private router: Router,
     private snackBarSvc: MatSnackBar
   ) { }
 
@@ -27,12 +27,10 @@ export class LoginComponent implements OnInit {
     if (!controlForm) throw new Error(`contol name ${contolName} not found in the formGoup`)
     if (controlForm.getError('required'))
       return "Este campo es obligatorio"
-    else if (controlForm.getError("email"))
-      return "Email no valido"
     else if (controlForm.getError("minlength"))
-      return "La contraseña debe tener al menos 8 carácteres"
+      return "Este campo debe tener al menos 8 carácteres"
     else if (controlForm.getError("maxlength"))
-      return "La contraseña debe tener maximo 30 carácteres"
+      return "Este campo debe tener maximo 30 carácteres"
     return ""
   }
 
@@ -41,8 +39,8 @@ export class LoginComponent implements OnInit {
       return
     this.authSvc.login(this.credentialsForm.value).subscribe((resp) => {
       if (resp)
-        this.route.navigate(['home'])
-      else{
+        this.router.navigate(['home'])
+      else {
         this.snackBarSvc.open(
           'Credenciales invalidas, Intentelo nuevamente',
           undefined,
@@ -56,7 +54,11 @@ export class LoginComponent implements OnInit {
 
   private initCredentialsForm() {
     return new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
+      username: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(30)
+      ]),
       password: new FormControl(null, [
         Validators.required,
         Validators.minLength(8),

@@ -1,0 +1,27 @@
+<div class="containerForm">
+    <h2>Registrarse</h2>
+    <form [formGroup]="userDataForm" (submit)="submit()" class="form">
+        <mat-form-field>
+            <mat-label>Nombre completo</mat-label>
+            <input matInput type="text" placeholder="Pepito Perez" formControlName="fullname">
+            <mat-error>{{getErrorMessage('fullname')}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Nombre de usuario</mat-label>
+            <input matInput type="text" placeholder="PepitoPer" formControlName="username">
+            <mat-error>{{getErrorMessage('username')}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Contraseña</mat-label>
+            <input matInput type="password" placeholder="********" formControlName="password">
+            <mat-error>{{getErrorMessage('password')}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Confirmación de contraseña</mat-label>
+            <input matInput type="password" placeholder="********" formControlName="passwordConfirmation">
+            <mat-error>{{getErrorMessage('passwordConfirmation')}}</mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary">Registrarse</button>
+    </form>
+    <a class="registerLink">Si ya tienes una cuenta <a routerLink="/">Inicia sesión aqui.</a></a>
+</div>

@@ -8,9 +8,17 @@ import { noSessionGuard } from './core/guards/noSession.guard';
 const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
     canActivate: [noSessionGuard],
     component: EmptyComponent,
     loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
+  },
+  {
+    path: 'register',
+    pathMatch: 'full',
+    canActivate: [noSessionGuard],
+    component: EmptyComponent,
+    loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule)
   },
   {
     path: 'home',
