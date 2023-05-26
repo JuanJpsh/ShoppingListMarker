@@ -25,12 +25,6 @@
       "name": "Listado maximo con20",
       "date": "05/25/2023",
       "userId": 1
-    },
-    {
-      "id": 3,
-      "name": "Tercer listado",
-      "date": "04/15/2023",
-      "userId": 2
     }
   ],
   "productos": [
@@ -73,6 +67,11 @@
       "producto": "",
       "cantidad": "",
       "id": 8
+    },
+    {
+      "producto": "",
+      "cantidad": "",
+      "id": 9
     }
   ]
 }

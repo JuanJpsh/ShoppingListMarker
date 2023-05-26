@@ -4,28 +4,25 @@ import { MarketCardComponent } from './components/market-card/market-card.compon
 import { HomeComponent } from './home-page/home.component';
 import { HomeRoutingModule } from './home-routing.module';
 import { FormMaterialModule } from 'src/app/commons/modules/form-material.module';
-import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CardMaterialModule } from 'src/app/commons/modules/card-material.module';
+import { AddUpdateMarketDialogComponent } from './components/add-update-market-dialog/add-update-market-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatCardModule } from '@angular/material/card';
-import {MatIconModule} from '@angular/material/icon';
 
 
 @NgModule({
   declarations: [
     MarketCardComponent,
     HomeComponent,
+    AddUpdateMarketDialogComponent
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
     FormMaterialModule,
-    MatSelectModule,
+    CardMaterialModule,
     ReactiveFormsModule,
     MatDialogModule,
-    MatDividerModule,
-    MatCardModule,MatIconModule
   ]
 })
 export class HomeModule { }

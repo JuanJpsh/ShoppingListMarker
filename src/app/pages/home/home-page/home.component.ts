@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { EmpAddEditComponent } from '../../shopping-list/components/emp-add-edit/emp-add-edit.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { environmet } from 'src/environments/environment';
 import { MarketsService } from '../service/markets.service';
-import { Observable } from 'rxjs';
 import { MarketClick, MarketNoUserId } from '../models/MarketsResponse';
 import { Router } from '@angular/router';
+import { AddUpdateMarketDialogComponent } from '../components/add-update-market-dialog/add-update-market-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   userFullname!: string;
-  markets!: Observable<MarketNoUserId[]>
+  markets!: MarketNoUserId[]
 
   constructor(
     private _dialog: MatDialog,
@@ -26,7 +25,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.userFullname = this.dataStorageSvc.getData(environmet.userFullnameKey) as string
-    this.markets = this.marketsSvc.getMarkets()
+    this.marketsSvc.getMarkets().subscribe((resp: MarketNoUserId[]) => {
+      this.markets = resp
+    })
   }
 
   navigateToList(clickedMarket: MarketClick){
@@ -34,7 +35,19 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['dashboard', 'market', clickedMarket.id.toString()])
   }
 
-  openAddEditEmpForm() {
-    this._dialog.open(EmpAddEditComponent);
+  openAddUpdateMarketDialog() {
+    this._dialog.open(AddUpdateMarketDialogComponent).afterClosed().subscribe(
+      (resp: string | undefined) => {
+        if (resp && resp != ''){
+          this.saveMarketList(resp);
+        }
+      }
+    )
+  }
+
+  private saveMarketList(marketName: string){
+    this.marketsSvc.saveMarket(marketName).subscribe((resp: MarketNoUserId) => {
+      this.markets.push(resp)
+    })
   }
 }
