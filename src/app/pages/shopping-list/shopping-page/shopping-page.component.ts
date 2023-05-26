@@ -21,9 +21,7 @@ export class ShoppingPageComponent {
   ngOnInit(): void {
     this.getProductoList();
   }
-  openAddEditEmpForm() {
-    this._dialog.open(EmpAddEditComponent);
-  }
+  
 
   getProductoList() {
     this._proService.getProductoList().subscribe({
