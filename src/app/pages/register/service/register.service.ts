@@ -1,17 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { UserDataRegister, UserDataRegisterResponse } from '../models/userDataRegister';
-import { UserResponse } from '../../auth/models/userResponse';
+import { UserResponse } from '../../../core/models/userResponse';
 import { map, mergeMap, of, take } from 'rxjs';
+import { environmet } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RegisterService {
 
-  private url = "http://localhost:3000/users"
+  private url = environmet.userURL;
 
   constructor(
     private http: HttpClient,

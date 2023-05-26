@@ -2,9 +2,35 @@
   "users": [
     {
       "id": 1,
-      "fullname": "Administrador de aplicacion",
-      "username": "Admin123",
+      "fullname": "Juan Pablo Solarte",
+      "username": "JuanPablo",
       "password": "12345678"
+    },
+    {
+      "id": 2,
+      "fullname": "Oscar Andres",
+      "username": "OscarAndres",
+      "password": "12345678"
+    }
+  ],
+  "markets": [
+    {
+      "id": 1,
+      "name": "Primer listado",
+      "date": "04/25/2023",
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "name": "Listado maximo con20",
+      "date": "05/25/2023",
+      "userId": 1
+    },
+    {
+      "id": 3,
+      "name": "Tercer listado",
+      "date": "04/15/2023",
+      "userId": 2
     }
   ]
 }

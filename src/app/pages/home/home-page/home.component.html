@@ -1,14 +1,13 @@
-<p>home works!</p>
-<p>Bienvenido</p>
-<button mat-raised-button (click)="openAddEditEmpForm()" color="primary">
-    CREAR LISTA
-</button>
-<button mat-raised-button color="primary">
-    VER LISTA
-</button>
-<button mat-raised-button color="primary">
-    ACTUALIZAR LISTA
-</button>
-<button mat-raised-button color="primary">
-    ELIMINAR LISTA
-</button>
+<div class="header">
+    <div class="header-content">
+        <h2>Bienvenido {{userFullname}}!</h2>
+        <span class="separator"></span>
+        <button mat-raised-button (click)="openAddEditEmpForm()" color="primary">
+            CREAR LISTA
+        </button>
+    </div>
+    <mat-divider></mat-divider>
+</div>
+<div class="grid">
+    <app-market-card *ngFor="let market of markets | async" [market]="market" />
+</div>
