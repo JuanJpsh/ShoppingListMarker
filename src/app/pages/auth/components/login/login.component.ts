@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     this.authSvc.login(this.credentialsForm.value).subscribe((resp) => {
       if (resp) {
         this.snackBarSvc.dismiss();
-        this.router.navigate(['home'])
+        this.router.navigate(['dashboard', 'home'])
       }
       else {
         this.correctCredentials = false;

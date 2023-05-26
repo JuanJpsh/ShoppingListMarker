@@ -1,7 +1,7 @@
 import { DialogRef } from '@angular/cdk/dialog';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ProductoService } from 'src/app/services/producto.service';
+import { ProductoService } from 'src/app/pages/shopping-list/services/producto.service';
 
 @Component({
   selector: 'app-emp-add-edit',

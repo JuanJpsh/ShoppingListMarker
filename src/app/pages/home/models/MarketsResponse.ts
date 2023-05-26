@@ -6,3 +6,5 @@ export interface MarketResponse {
 }
 
 export type MarketNoUserId = Pick<MarketResponse, 'id' | 'name' | 'date'>
+
+export type MarketClick = Pick<MarketResponse, 'id' | 'name'>
