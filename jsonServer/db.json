@@ -6,5 +6,42 @@
       "username": "Admin123",
       "password": "12345678"
     }
+  ],
+  "productos": [
+    {
+      "producto": "Arroz Florhuila 3 Kg",
+      "cantidad": "3",
+      "id": 1
+    },
+    {
+      "producto": "Arroz Florhuila 1 Kg",
+      "cantidad": "2",
+      "id": 2
+    },
+    {
+      "producto": "Arroz Florhuila 500 gr",
+      "cantidad": "1",
+      "id": 3
+    },
+    {
+      "producto": "Arroz Florhuila Platino 1Kg OLIMPICA $6.400",
+      "cantidad": "1",
+      "id": 4
+    },
+    {
+      "producto": "Arroz Sabrosón 1Kg OLIMPICA $4.500",
+      "cantidad": "3",
+      "id": 5
+    },
+    {
+      "producto": "Arroz Florhuila Blanco 500gr OLIMPICA $2.470",
+      "cantidad": "2",
+      "id": 6
+    },
+    {
+      "producto": "Atún Medalla De Oro Lomitos En Aceite Vegetal 170 G OLIMPICA $5.590",
+      "cantidad": "2",
+      "id": 7
+    }
   ]
 }
