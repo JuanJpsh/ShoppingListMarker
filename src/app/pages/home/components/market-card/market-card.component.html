@@ -1,0 +1,11 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{market.name}}</mat-card-title>
+        <mat-card-subtitle>{{market.date}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-actions align="end">
+        <button mat-button (click)="onClickWatch()">VER <mat-icon>visibility</mat-icon></button>
+        <button mat-button>MODIFICAR <mat-icon>edit</mat-icon></button>
+    </mat-card-actions>
+</mat-card>

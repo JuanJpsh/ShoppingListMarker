@@ -1,0 +1,13 @@
+<div class="header">
+    <div class="header-content">
+        <h2>Bienvenido {{userFullname}}!</h2>
+        <span class="separator"></span>
+        <button mat-raised-button (click)="openAddUpdateMarketDialog()" color="primary">
+            CREAR MERCADO
+        </button>
+    </div>
+    <mat-divider></mat-divider>
+</div>
+<div class="grid">
+    <app-market-card *ngFor="let market of markets" [market]="market" (clickWatch)="navigateToList($event)" />
+</div>

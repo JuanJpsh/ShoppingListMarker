@@ -1,0 +1,22 @@
+<div class="containerForm">
+    <h2>Iniciar sesión</h2>
+    <div class="incorrectCredentialsError">
+        <mat-error *ngIf="!correctCredentials">
+            Nombre de usuario o contraseña incorrecta.
+        </mat-error>
+    </div>
+    <form [formGroup]="credentialsForm" (ngSubmit)="submit()" class="form">
+        <mat-form-field>
+            <mat-label>Nombre de usuario</mat-label>
+            <input matInput type="text" placeholder="Ejemplo12" formControlName="username">
+            <mat-error>{{getErrorMessage('username')}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Contraseña</mat-label>
+            <input matInput type="password" placeholder="********" formControlName="password">
+            <mat-error>{{getErrorMessage('password')}}</mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary">Ingresar</button>
+    </form>
+    <a class="registerLink">Si no tienes una cuenta <a routerLink="/register">Registrate aqui.</a></a>
+</div>
