@@ -17,7 +17,8 @@ export class ShoppingPageComponent implements OnInit{
   displayedColumns: string[] = [
     'id',
     'producto',
-    'cantidad'
+    'cantidad',
+    'action'
   ];
   dataSource!: MatTableDataSource<any>;
   listName!: string;
@@ -30,11 +31,17 @@ export class ShoppingPageComponent implements OnInit{
   ngOnInit(): void {
     this.getProductoList();
     this.listName = this.dataStorageSvc.getData(environmet.listNameKey) as string
-
   }
   
   openAddEditEmpForm() {
-    this._dialog.open(EmpAddEditComponent);
+    const dialogRef = this._dialog.open(EmpAddEditComponent);
+    dialogRef.afterClosed().subscribe({
+      next: (val) => {
+        if(val) {
+          this.getProductoList();
+        }
+      },
+    });
   }
 
   getProductoList() {
@@ -55,5 +62,28 @@ export class ShoppingPageComponent implements OnInit{
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  deleteProducto(id: number) {
+    this._proService.deleteProducto(id).subscribe({
+      next: (res) => {
+        alert('Producto borrado exitosamente!');
+        this.getProductoList();
+      },
+      error: console.log,
+    });
+  }
+
+  openEditForm(data: any) {
+    const dialogRef = this._dialog.open(EmpAddEditComponent, {
+      data,
+    });
+    dialogRef.afterClosed().subscribe({
+      next: (val) => {
+        if(val) {
+          this.getProductoList();
+        }
+      },
+    });    
   }
 }

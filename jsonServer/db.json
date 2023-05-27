@@ -25,22 +25,28 @@
       "name": "Listado maximo con20",
       "date": "05/25/2023",
       "userId": 1
+    },
+    {
+      "name": "Segundo Listado",
+      "date": "05/26/2023",
+      "userId": 1,
+      "id": 3
     }
   ],
   "productos": [
     {
-      "producto": "Arroz Florhuila 3 Kg",
+      "producto": "Atún Medalla De Oro Rallado En Acite 170 G OLIMPICA $3.990",
       "cantidad": "3",
       "id": 1
     },
     {
-      "producto": "Arroz Florhuila 1 Kg",
+      "producto": "Queso Crema Colanta 400 gr OLIMPICA $10.390",
       "cantidad": "2",
       "id": 2
     },
     {
-      "producto": "Arroz Florhuila 500 gr",
-      "cantidad": "1",
+      "producto": "Queso Colanta Para Asar 500 gr OLIMPICA $20.400",
+      "cantidad": "2",
       "id": 3
     },
     {
@@ -64,14 +70,29 @@
       "id": 7
     },
     {
-      "producto": "",
-      "cantidad": "",
+      "producto": "Arroz Sabrosón 1Kg OLIMPICA $4.500",
+      "cantidad": "1",
       "id": 8
     },
     {
-      "producto": "",
-      "cantidad": "",
+      "producto": "Arroz Florhuila Platino 1Kg OLIMPICA $6.400",
+      "cantidad": "3",
       "id": 9
+    },
+    {
+      "producto": "Arroz Florhuila Platino 1Kg OLIMPICA $6.400",
+      "cantidad": "5",
+      "id": 10
+    },
+    {
+      "producto": "Arroz Florhuila Platino 1Kg OLIMPICA $6.400",
+      "cantidad": "3",
+      "id": 11
+    },
+    {
+      "producto": "Queso Colanta Mozzarella de Búfala 250 gr OLIMPICA $11.950",
+      "cantidad": "4",
+      "id": 12
     }
   ]
 }
