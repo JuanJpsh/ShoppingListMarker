@@ -17,18 +17,18 @@
     {
       "id": 1,
       "name": "Primer listado",
-      "date": "04/25/2023",
+      "date": "2022-05-27T16:23:17.695Z",
       "userId": 1
     },
     {
       "id": 2,
       "name": "Listado maximo con20",
-      "date": "05/25/2023",
+      "date": "2023-02-27T16:23:17.695Z",
       "userId": 1
     },
     {
       "name": "Segundo Listado",
-      "date": "05/26/2023",
+      "date": "2023-05-27T16:23:17.695Z",
       "userId": 1,
       "id": 3
     }

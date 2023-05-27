@@ -1,7 +1,7 @@
 export interface MarketResponse {
     id: number
     name: string
-    date: string
+    date: Date
     userId: number
 }
 
