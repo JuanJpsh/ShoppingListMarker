@@ -8,6 +8,7 @@ import { MarketClick, MarketNoUserId } from '../../models/MarketsResponse';
 export class MarketCardComponent {
   @Input() market!: MarketNoUserId
   @Output() clickWatch = new EventEmitter<MarketClick>();
+  @Output() clickUpdate = new EventEmitter<MarketNoUserId>();
 
   onClickWatch() {
     const { id, name } = this.market
@@ -15,5 +16,9 @@ export class MarketCardComponent {
       id,
       name
     })
+  }
+
+  onClickUpdate(){
+    this.clickUpdate.emit(this.market)
   }
 }

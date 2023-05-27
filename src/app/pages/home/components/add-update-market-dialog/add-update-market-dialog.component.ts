@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-update-market-dialog',
@@ -9,10 +9,16 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class AddUpdateMarketDialogComponent implements OnInit {
   nameControl!: FormControl;
+  dialogTitle!: string;
 
-  constructor(public dialogRef: MatDialogRef<AddUpdateMarketDialogComponent>) {}
+  constructor(
+    private dialogRef: MatDialogRef<AddUpdateMarketDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) private name: string
+  ) { }
 
   ngOnInit(): void {
+    if (this.name) this.dialogTitle = "Actualizar lista de mercado"
+    else this.dialogTitle = "Nueva lista de mercado"
     this.nameControl = this.initNameControl();
   }
 
@@ -27,11 +33,13 @@ export class AddUpdateMarketDialogComponent implements OnInit {
   }
 
   private initNameControl() {
+    if (this.name)
+      return new FormControl(this.name, [Validators.required, Validators.maxLength(20), Validators.minLength(3)])
     return new FormControl(null, [Validators.required, Validators.maxLength(20), Validators.minLength(3)])
   }
 
-  onClickSave(){
-    if (this.nameControl.invalid){
+  onClickSave() {
+    if (this.nameControl.invalid) {
       this.nameControl.markAsTouched()
       return
     }

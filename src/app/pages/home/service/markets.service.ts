@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { environmet } from 'src/environments/environment';
-import { map, take } from 'rxjs';
-import { MarketNoUserId, MarketResponse, MarketToSave } from '../models/MarketsResponse';
+import { map, take, tap } from 'rxjs';
+import { MarketClick, MarketNoUserId, MarketResponse, MarketToSave } from '../models/MarketsResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +45,14 @@ export class MarketsService {
         name: resp.name,
         date: resp.date
       }))
+    )
+  }
+
+  updateMarket(market: MarketNoUserId){
+    const userId = Number.parseInt(this.dataStorageSvc.getData(environmet.userIdKey) as string)
+    const marketToUpdate: MarketToSave = {...market, userId}
+    return this.http.put<any>(`${this.url}/${market.id}`, marketToUpdate).pipe(
+      take(1)
     )
   }
 }

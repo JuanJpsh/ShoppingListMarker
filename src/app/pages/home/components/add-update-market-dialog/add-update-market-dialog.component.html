@@ -1,6 +1,6 @@
-<h1 mat-dialog-title>Nueva lista de mercado</h1>
+<h1 mat-dialog-title>{{dialogTitle}}</h1>
 <div mat-dialog-content>
-    <mat-form-field class="example-full-width">
+    <mat-form-field class="name-field">
         <mat-label>Nombre</mat-label>
         <input type="text" matInput placeholder="Digite el nombre de la lista" [formControl]="nameControl">
         <mat-error> {{getErrorMessage()}}</mat-error>
@@ -8,5 +8,5 @@
 </div>
 <div mat-dialog-actions>
     <button mat-button mat-dialog-close>Cancelar</button>
-    <button mat-button cdkFocusInitial (click)="onClickSave()">Crear</button>
+    <button mat-button cdkFocusInitial (click)="onClickSave()">Guardar</button>
 </div>

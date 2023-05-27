@@ -30,24 +30,41 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  navigateToList(clickedMarket: MarketClick){
+  navigateToList(clickedMarket: MarketClick) {
     this.dataStorageSvc.saveData(environmet.listNameKey, clickedMarket.name)
     this.router.navigate(['dashboard', 'market', clickedMarket.id.toString()])
   }
 
-  openAddUpdateMarketDialog() {
+  openAddMarketDialog() {
     this._dialog.open(AddUpdateMarketDialogComponent).afterClosed().subscribe(
       (resp: string | undefined) => {
-        if (resp && resp != ''){
+        if (resp && resp != '') {
           this.saveMarketList(resp);
         }
       }
     )
   }
 
-  private saveMarketList(marketName: string){
+  openUpdateMarketDialog(marketToUpdate: MarketNoUserId) {
+    this._dialog.open(AddUpdateMarketDialogComponent, {
+      data: marketToUpdate.name
+    }).afterClosed().subscribe(
+      (resp: string | undefined) => {
+        if (resp && resp != '' && resp != marketToUpdate.name) {
+          marketToUpdate.name = resp
+          this.updateMarketList(marketToUpdate)
+        }
+      }
+    )
+  }
+
+  private saveMarketList(marketName: string) {
     this.marketsSvc.saveMarket(marketName).subscribe((resp: MarketNoUserId) => {
       this.markets.push(resp)
     })
+  }
+
+  private updateMarketList(clickedMarket: MarketNoUserId) {
+    this.marketsSvc.updateMarket(clickedMarket).subscribe()
   }
 }
