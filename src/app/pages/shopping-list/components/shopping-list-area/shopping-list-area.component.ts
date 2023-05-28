@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProductNoDate } from '../../models/product';
 
 export interface Section {
@@ -12,4 +12,5 @@ export interface Section {
 })
 export class ShoppingListAreaComponent {
   @Input() products!: ProductNoDate[];
+  @Output() markPurchasedProduct = new EventEmitter<number>()
 }

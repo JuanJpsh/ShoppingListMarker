@@ -1,7 +1,8 @@
 <div class="container">
   <h1 class="title">{{listName}}</h1>
   <div class="lists-container">
-    <app-shopping-list-area [products]="productsList" class="padding-left"/>
+    <app-shopping-list-area class="padding-left"
+    [products]="productsList" (markPurchasedProduct)="moveProductToPurchased($event)"/>
     <app-purchased-products-list-area [products]="purchasedProductsList" class="padding-right"/>
   </div>
  <!--  <button mat-raised-button (click)="openAddEditEmpForm()" color="primary">

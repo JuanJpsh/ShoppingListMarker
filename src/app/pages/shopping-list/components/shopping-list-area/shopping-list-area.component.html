@@ -9,18 +9,22 @@
     <mat-divider></mat-divider>
     <mat-card-content class="area-list-card-content">
         <mat-list>
-            <div *ngFor="let prod of products">
+            <div *ngFor="let prod of products; let i = index">
                 <mat-list-item>
-                    <div matListItemTitle>{{prod.name}}</div>
+                    <div matListItemTitle [matTooltip]="prod.name">{{prod.name}}</div>
                     <div matListItemLine>proveedor con id: {{prod.providerId}}</div>
                     <div matListItemLine>{{prod.price}}</div>
                     <div matListItemMeta>
                         <div>
-                            <button mat-icon-button color="warn">
+                            <button mat-icon-button color="warn" matTooltip="Eliminar producto">
                                 <mat-icon>delete</mat-icon>
                             </button>
-                            <button mat-icon-button color="primary">
+                            <button mat-icon-button matTooltip="Editar producto">
                                 <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button color="primary" 
+                            matTooltip="Marcar como comprado" (click)="markPurchasedProduct.emit(i)">
+                                <mat-icon>check_circle</mat-icon>
                             </button>
                         </div>
                     </div>

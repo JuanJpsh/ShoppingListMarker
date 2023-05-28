@@ -34,17 +34,28 @@ export class ShoppingPageComponent implements OnInit{
   constructor(private _dialog: MatDialog, private _proService: ProductoService, private dataStorageSvc: DataStoreService,) {}
 
   ngOnInit(): void {
+    /**
+     * this._proService.getProductoList() deberia ser un observable que devuelva dos listas separadas.
+     * primera lista: la de productos que tengan estado sin comprar
+     * segunda lista: la de productos que tengan estado comprado
+     * cada una de estas deberia asignarse a productsList y purchasedProductsList correspondientemente
+     * NOTA: Todos los productos de las dos listas tienen que pertenecer al listado en cuestion (marketId)
+     */
     this._proService.getProductoList().subscribe(resp => {
       this.productsList = resp
+      this.purchasedProductsList = []
     })
-    this.purchasedProductsList = [{
-      id: 5,
-      name: "Aqui deberian ir los que se van cambiado a estado comprado",
-      price: 12000,
-      providerId: 1
-    }]
+    
     this.getProductoList();
     this.listName = this.dataStorageSvc.getData(environmet.listNameKey) as string
+  }
+
+  moveProductToPurchased(indexProduct: number){
+    /**
+     * Primero deberia llamar al metodo para cambiar el estado del producto en la tabla lista_producto
+     */
+    this.purchasedProductsList.push(this.productsList[indexProduct])
+    this.productsList.splice(indexProduct, 1)
   }
   
   openAddEditEmpForm() {

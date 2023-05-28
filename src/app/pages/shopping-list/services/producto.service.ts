@@ -21,7 +21,12 @@ export class ProductoService {
   getProductoList(): Observable<ProductNoDate[]> {
     return this._http.get<ProductResponse[]>('http://localhost:3000/products').pipe(
       take(1),
-      map(resp => resp.map(val => ({...val})))
+      map<ProductResponse[], ProductNoDate[]>(resp => resp.map(val => ({
+        id: val.id,
+        name: val.name,
+        price: val.price,
+        providerId: val.providerId
+      })))
     );
   }
 
