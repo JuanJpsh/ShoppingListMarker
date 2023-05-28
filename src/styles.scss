@@ -13,3 +13,21 @@ body {
 .spacer {
     flex: 1 1 auto;
 }
+
+.area-list-card {
+    margin: 1rem;
+    height: calc(100% - 2rem);
+}
+
+.area-list-card-content {
+    overflow-y: auto;
+}
+
+.header-content {
+    display: flex;
+    flex-direction: row;
+}
+
+.height2-4rem {
+    height: 2.4rem;
+}

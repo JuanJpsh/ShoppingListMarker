@@ -39,8 +39,8 @@
 }
 
 .page {
-  background-color: white;
+  background-color: #f9f9f9;
   height: calc(100% - 2rem);
   margin: 1rem;
-  overflow-y: auto;
+  overflow:hidden;
 }

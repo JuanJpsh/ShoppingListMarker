@@ -1,0 +1,32 @@
+<mat-card class="area-list-card">
+    <div mat-subheader class="header-content height2-4rem">
+        Lista de compras
+        <span class="spacer"></span>
+        <button mat-mini-fab color="primary" matTooltip="Añadir producto">
+            <mat-icon>add</mat-icon>
+        </button>
+    </div>
+    <mat-divider></mat-divider>
+    <mat-card-content class="area-list-card-content">
+        <mat-list>
+            <div *ngFor="let prod of products">
+                <mat-list-item>
+                    <div matListItemTitle>{{prod.name}}</div>
+                    <div matListItemLine>proveedor con id: {{prod.providerId}}</div>
+                    <div matListItemLine>{{prod.price}}</div>
+                    <div matListItemMeta>
+                        <div>
+                            <button mat-icon-button color="warn">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                            <button mat-icon-button color="primary">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </mat-list-item>
+                <mat-divider></mat-divider>
+            </div>
+        </mat-list>
+    </mat-card-content>
+</mat-card>

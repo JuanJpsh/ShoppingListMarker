@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map, take } from 'rxjs';
+import { ProductNoDate, ProductResponse } from '../models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -10,18 +11,21 @@ export class ProductoService {
   constructor(private _http: HttpClient) { }
 
   addProducto(data: any): Observable<any> {
-    return this._http.post('http://localhost:3000/productos', data);
+    return this._http.post('http://localhost:3000/products', data);
   }
 
   updateProducto(id: number, data: any): Observable<any> {
-    return this._http.put(`http://localhost:3000/productos/${id}`, data);
+    return this._http.put(`http://localhost:3000/products/${id}`, data);
   }
 
-  getProductoList(): Observable<any> {
-    return this._http.get('http://localhost:3000/productos');
+  getProductoList(): Observable<ProductNoDate[]> {
+    return this._http.get<ProductResponse[]>('http://localhost:3000/products').pipe(
+      take(1),
+      map(resp => resp.map(val => ({...val})))
+    );
   }
 
   deleteProducto(id: number): Observable<any> {
-    return this._http.delete(`http://localhost:3000/productos/${id}`);
+    return this._http.delete(`http://localhost:3000/products/${id}`);
   }
 }

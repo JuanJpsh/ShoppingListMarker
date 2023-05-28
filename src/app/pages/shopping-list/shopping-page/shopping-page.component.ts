@@ -7,6 +7,7 @@ import { ProductoService } from '../services/producto.service';
 import { EmpAddEditComponent } from '../components/emp-add-edit/emp-add-edit.component';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { environmet } from 'src/environments/environment';
+import { ProductNoDate } from '../models/product';
 
 @Component({
   selector: 'app-shopping-page',
@@ -14,6 +15,10 @@ import { environmet } from 'src/environments/environment';
   styleUrls: ['./shopping-page.component.scss']
 })
 export class ShoppingPageComponent implements OnInit{
+
+  productsList!: ProductNoDate[];
+  purchasedProductsList!: ProductNoDate[];
+
   displayedColumns: string[] = [
     'id',
     'producto',
@@ -29,6 +34,15 @@ export class ShoppingPageComponent implements OnInit{
   constructor(private _dialog: MatDialog, private _proService: ProductoService, private dataStorageSvc: DataStoreService,) {}
 
   ngOnInit(): void {
+    this._proService.getProductoList().subscribe(resp => {
+      this.productsList = resp
+    })
+    this.purchasedProductsList = [{
+      id: 5,
+      name: "Aqui deberian ir los que se van cambiado a estado comprado",
+      price: 12000,
+      providerId: 1
+    }]
     this.getProductoList();
     this.listName = this.dataStorageSvc.getData(environmet.listNameKey) as string
   }
