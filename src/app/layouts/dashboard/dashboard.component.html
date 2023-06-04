@@ -3,17 +3,18 @@
     <button mat-icon-button (click)="snav.toggle()">
       <mat-icon>menu</mat-icon>
     </button>
-    <span>Shopping list marker</span>
+    <span [routerLink]="['home']" class="header-title" (click)="snav.close()">Shopping list marker</span>
     <span class="spacer"></span>
     <button mat-icon-button (click)="onLogout()">
       <mat-icon>logout</mat-icon>
     </button>
   </mat-toolbar>
 
-  <mat-sidenav-container class="sidenav-container" [ngClass]="mobileQuery.matches ? 'margin-mobile' : 'margin-no-mobile'">
+  <mat-sidenav-container class="sidenav-container" [hasBackdrop]="true"
+    [ngClass]="mobileQuery.matches ? 'margin-mobile' : 'margin-no-mobile'">
     <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="56">
-      <app-sidebar/>
+      <app-sidebar [markets]="markets" (onOptionSelected)="snav.close()" />
     </mat-sidenav>
 
     <mat-sidenav-content class="container-page">

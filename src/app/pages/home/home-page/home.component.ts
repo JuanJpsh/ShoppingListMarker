@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { environmet } from 'src/environments/environment';
-import { MarketsService } from '../service/markets.service';
+import { MarketsService } from '../../../core/services/markets.service';
 import { MarketClick, MarketNoUserId } from '../models/MarketsResponse';
 import { Router } from '@angular/router';
 import { AddUpdateMarketDialogComponent } from '../components/add-update-market-dialog/add-update-market-dialog.component';
+import { MarketTitleService } from 'src/app/core/services/market-title.service';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,8 @@ export class HomeComponent implements OnInit {
     private _dialog: MatDialog,
     private dataStorageSvc: DataStoreService,
     private router: Router,
-    private marketsSvc: MarketsService
+    private marketsSvc: MarketsService,
+    private marketTitleSvc: MarketTitleService
   ) { }
 
   ngOnInit(): void {
@@ -31,8 +33,8 @@ export class HomeComponent implements OnInit {
   }
 
   navigateToList(clickedMarket: MarketClick) {
-    this.dataStorageSvc.saveData(environmet.listNameKey, clickedMarket.name)
-    this.router.navigate(['dashboard', 'market', clickedMarket.id.toString()])
+    this.marketTitleSvc.setMarketTitle(clickedMarket.name);
+    this.router.navigate(['dashboard', 'market', clickedMarket.id.toString()]);
   }
 
   openAddMarketDialog() {

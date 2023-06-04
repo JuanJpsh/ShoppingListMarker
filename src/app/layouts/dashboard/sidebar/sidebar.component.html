@@ -1,3 +1,13 @@
 <mat-nav-list>
-    <a mat-list-item>asdasdsad</a>
+    <a mat-list-item [routerLink]="['home']" [ngClass]="{'selected': currentUrl == 'home'}"
+        (click)="onOptionSelected.emit()">
+        <mat-icon matListItemIcon>home</mat-icon>
+        Home
+    </a>
+    <div mat-subheader>Listas de mercado</div>
+    <a mat-list-item *ngFor="let market of markets" [ngClass]="{'selected': currentUrl == 'market/' + market.id}"
+        [routerLink]="['market', market.id.toString()]" (click)="onOptionClick(market.name)">
+        <mat-icon matListItemIcon>shopping_bag</mat-icon>
+        {{market.name}}
+    </a>
 </mat-nav-list>

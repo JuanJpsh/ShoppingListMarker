@@ -16,5 +16,5 @@
     gap: 1rem;
     grid-template-columns: repeat(auto-fill, minmax(16rem, auto));
     overflow-y: auto;
-    height: calc(100% - 6rem);
+    max-height: calc(100% - 6rem);
 }

@@ -9,6 +9,6 @@
     <mat-divider></mat-divider>
 </div>
 <div class="grid">
-    <app-market-card *ngFor="let market of markets" 
+    <app-market-card *ngFor="let market of markets"
     [market]="market" (clickWatch)="navigateToList($event)" (clickUpdate)="openUpdateMarketDialog($event)"/>
 </div>

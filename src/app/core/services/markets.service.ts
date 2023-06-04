@@ -2,19 +2,23 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { environmet } from 'src/environments/environment';
-import { map, take, tap } from 'rxjs';
-import { MarketClick, MarketNoUserId, MarketResponse, MarketToSave } from '../models/MarketsResponse';
+import { BehaviorSubject, map, take, tap } from 'rxjs';
+import { MarketClick, MarketNoUserId, MarketResponse, MarketToSave } from '../../pages/home/models/MarketsResponse';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MarketsService {
 
+  private markets = new BehaviorSubject<MarketNoUserId[]>([])
+
   private url = environmet.shoppingListsURL;
 
   constructor(private http: HttpClient, private dataStorageSvc: DataStoreService) { }
 
   getMarkets() {
+    if (this.markets.getValue().length > 0)
+      return this.markets
     const userId = this.dataStorageSvc.getData(environmet.userIdKey) as string
     return this.http.get<MarketResponse[]>(`${this.url}?userId=${userId}`).pipe(
       take(1),
@@ -24,7 +28,8 @@ export class MarketsService {
         date: val.date
       }))
       ),
-      map((resp: MarketNoUserId[]) => resp.sort((a, b) =>new Date(b.date).getTime() - new Date(a.date).getTime()))
+      map((resp: MarketNoUserId[]) => resp.sort((a, b) =>new Date(b.date).getTime() - new Date(a.date).getTime())),
+      tap((resp: MarketNoUserId[]) => this.markets.next(resp))
     )
   }
 

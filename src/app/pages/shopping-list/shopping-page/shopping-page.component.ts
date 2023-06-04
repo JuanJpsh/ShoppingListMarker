@@ -8,13 +8,16 @@ import { EmpAddEditComponent } from '../components/emp-add-edit/emp-add-edit.com
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { environmet } from 'src/environments/environment';
 import { ProductNoDate } from '../models/product';
+import { MarketTitleService } from 'src/app/core/services/market-title.service';
+import { ActivatedRoute } from '@angular/router';
+import { mergeMap } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-page',
   templateUrl: './shopping-page.component.html',
   styleUrls: ['./shopping-page.component.scss']
 })
-export class ShoppingPageComponent implements OnInit{
+export class ShoppingPageComponent implements OnInit {
 
   productsList!: ProductNoDate[];
   purchasedProductsList!: ProductNoDate[];
@@ -30,8 +33,13 @@ export class ShoppingPageComponent implements OnInit{
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  
-  constructor(private _dialog: MatDialog, private _proService: ProductoService, private dataStorageSvc: DataStoreService,) {}
+
+  constructor(
+    private _dialog: MatDialog,
+    private _proService: ProductoService,
+    private marketTitleSvc: MarketTitleService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     /**
@@ -45,24 +53,29 @@ export class ShoppingPageComponent implements OnInit{
       this.productsList = resp
       this.purchasedProductsList = []
     })
-    
+
+    this.route.params.pipe(
+      mergeMap((params) => this.marketTitleSvc.getMarketTitle(Number.parseInt(params['id'])))
+    ).subscribe((title: string) => {
+      this.listName = title
+    })
+
     this.getProductoList();
-    this.listName = this.dataStorageSvc.getData(environmet.listNameKey) as string
   }
 
-  moveProductToPurchased(indexProduct: number){
+  moveProductToPurchased(indexProduct: number) {
     /**
      * Primero deberia llamar al metodo para cambiar el estado del producto en la tabla lista_producto
      */
     this.purchasedProductsList.push(this.productsList[indexProduct])
     this.productsList.splice(indexProduct, 1)
   }
-  
+
   openAddEditEmpForm() {
     const dialogRef = this._dialog.open(EmpAddEditComponent);
     dialogRef.afterClosed().subscribe({
       next: (val) => {
-        if(val) {
+        if (val) {
           this.getProductoList();
         }
       },
@@ -105,10 +118,10 @@ export class ShoppingPageComponent implements OnInit{
     });
     dialogRef.afterClosed().subscribe({
       next: (val) => {
-        if(val) {
+        if (val) {
           this.getProductoList();
         }
       },
-    });    
+    });
   }
 }

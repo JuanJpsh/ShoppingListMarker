@@ -4,12 +4,14 @@ import { EmptyComponent } from './layouts/empty/empty.component';
 import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { sessionGuard } from './core/guards/session.guard';
 import { noSessionGuard } from './core/guards/noSession.guard';
+import { marketsResolver } from './core/resolvers/markets.resolver';
 
 const routes: Routes = [
   {
     path: 'dashboard',
     canActivate: [sessionGuard],
     component: DashboardComponent,
+    resolve: { markets: marketsResolver },
     children: [
       {
         path: 'home',
