@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>{{dialogTitle}}</h1>
+<div mat-dialog-content>
+    <mat-form-field class="name-field">
+        <mat-label>Producto</mat-label>
+        <mat-select placeholder="Elija un producto" [formControl]="productControl">
+            <mat-option value="{{i}}" *ngFor="let opt of productOptions;  let i = index">
+                <p>{{opt.name}}</p>
+                <p>{{opt.price | currency}} Proveedor:{{opt.providerId}}</p>
+            </mat-option>
+            <mat-option>Otro</mat-option>
+        </mat-select>
+        <mat-error> {{getErrorMessage()}}</mat-error>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button cdkFocusInitial (click)="onSave()">Guardar</button>
+</div>

@@ -5,6 +5,7 @@ import { DashboardComponent } from './layouts/dashboard/dashboard.component';
 import { sessionGuard } from './core/guards/session.guard';
 import { noSessionGuard } from './core/guards/noSession.guard';
 import { marketsResolver } from './core/resolvers/markets.resolver';
+import { validMarketGuard } from './core/guards/valid-market.guard';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
       {
         path: 'market/:id',
         pathMatch: 'full',
+        canActivate: [validMarketGuard],
         loadChildren: () => import('./pages/shopping-list/shopping-list.module').then(m => m.ShoppingListModule)
       },
       {

@@ -1,63 +1,9 @@
 <div class="container">
   <h1 class="title">{{listName}}</h1>
   <div class="lists-container">
-    <app-shopping-list-area class="padding-left"
-    [products]="productsList" (markPurchasedProduct)="moveProductToPurchased($event)"/>
-    <app-purchased-products-list-area [products]="purchasedProductsList" class="padding-right"/>
+    <app-shopping-list-area class="padding-left" [products]="listedProducts"
+      (markPurchasedProduct)="moveProductToPurchased($event)" />
+    <app-purchased-products-list-area [products]="purchasedProducts" class="padding-right"
+      (markListedProduct)="moveProductToListed($event)" />
   </div>
- <!--  <button mat-raised-button (click)="openAddEditEmpForm()" color="primary">
-    AGREGAR PRODUCTO A LA LISTA
-  </button>
-
-
-  <mat-form-field>
-    <mat-label>Buscar en la lista</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ejemplo: Atún" #input>
-  </mat-form-field>
-
-  <div class="table-container">
-    <table mat-table [dataSource]="dataSource" matSort>
-
-       ID Column 
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-        <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-      </ng-container>
-
-       Columna de Producto 
-      <ng-container matColumnDef="producto">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Producto</th>
-        <td mat-cell *matCellDef="let row"> {{row.producto}} </td>
-      </ng-container>
-
-       Columna de Cantidad 
-      <ng-container matColumnDef="cantidad">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cantidad </th>
-        <td mat-cell *matCellDef="let row"> {{row.cantidad}} </td>
-      </ng-container>
-
-       Columna de Cantidad 
-      <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Acción </th>
-        <td mat-cell *matCellDef="let row">
-          <button mat-icon-button color="primary" (click)="openEditForm(row)">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="deleteProducto(row.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-      Row shown when there is no matching data.
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-      </tr>
-    </table>
-
-    <mat-paginator [pageSizeOptions]="[10, 50, 100]" aria-label="Select page of users"></mat-paginator>
-  </div> -->
 </div>

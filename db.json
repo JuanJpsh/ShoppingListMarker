@@ -29,7 +29,7 @@
     {
       "name": "Segundo Listado",
       "date": "2023-05-27T16:23:17.695Z",
-      "userId": 1,
+      "userId": 2,
       "id": 3
     }
   ],
@@ -54,6 +54,32 @@
       "providerId": 1,
       "creationDate": "2023-05-27T16:23:17.695Z",
       "id": 3
+    }
+  ],
+  "markets_products": [
+    {
+      "id": 1,
+      "marketId": 1,
+      "productId": 1,
+      "state": "purchased"
+    },
+    {
+      "id": 2,
+      "marketId": 2,
+      "productId": 1,
+      "state": "purchased"
+    },
+    {
+      "id": 3,
+      "marketId": 2,
+      "productId": 2,
+      "state": "listed"
+    },
+    {
+      "id": 4,
+      "marketId": 2,
+      "productId": 3,
+      "state": "listed"
     }
   ],
   "providers": [

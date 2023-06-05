@@ -2,14 +2,15 @@
     <div mat-subheader class="header-content height2-4rem">
         Lista de compras
         <span class="spacer"></span>
-        <button mat-mini-fab color="primary" matTooltip="Añadir producto">
+        <button mat-mini-fab color="primary" matTooltip="Añadir producto"
+        (click)="openAddMarketDialog()">
             <mat-icon>add</mat-icon>
         </button>
     </div>
     <mat-divider></mat-divider>
     <mat-card-content class="area-list-card-content">
         <mat-list>
-            <div *ngFor="let prod of products; let i = index">
+            <div *ngFor="let prod of products">
                 <mat-list-item>
                     <div matListItemTitle [matTooltip]="prod.name">{{prod.name}}</div>
                     <div matListItemLine>proveedor con id: {{prod.providerId}}</div>
@@ -23,7 +24,7 @@
                                 <mat-icon>edit</mat-icon>
                             </button>
                             <button mat-icon-button color="primary" 
-                            matTooltip="Marcar como comprado" (click)="markPurchasedProduct.emit(i)">
+                            matTooltip="Marcar como comprado" (click)="markPurchasedProduct.emit(prod)">
                                 <mat-icon>check_circle</mat-icon>
                             </button>
                         </div>

@@ -10,15 +10,15 @@ import { MarketClick, MarketNoUserId, MarketResponse, MarketToSave } from '../..
 })
 export class MarketsService {
 
-  private markets = new BehaviorSubject<MarketNoUserId[]>([])
+  private markets = new BehaviorSubject<MarketNoUserId[] | null>(null)
 
   private url = environmet.shoppingListsURL;
 
   constructor(private http: HttpClient, private dataStorageSvc: DataStoreService) { }
 
   getMarkets() {
-    if (this.markets.getValue().length > 0)
-      return this.markets
+    if (this.markets.getValue())
+      return this.markets as BehaviorSubject<MarketNoUserId[]>
     const userId = this.dataStorageSvc.getData(environmet.userIdKey) as string
     return this.http.get<MarketResponse[]>(`${this.url}?userId=${userId}`).pipe(
       take(1),

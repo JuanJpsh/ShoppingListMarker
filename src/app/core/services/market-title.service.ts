@@ -27,8 +27,8 @@ export class MarketTitleService {
       map((resp) => {
         if (typeof resp == "string")
           return resp
-        let currentMarket = resp.find((val) => val.id == id) as MarketNoUserId
-        return currentMarket.name
+        let currentMarket = resp.find((val) => val.id == id)
+        return currentMarket ? currentMarket.name : ''
       })
     )
   }

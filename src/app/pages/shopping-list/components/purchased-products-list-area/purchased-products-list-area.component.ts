@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { ProductNoDate } from '../../models/product';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MarketProductNoDate } from '../../models/product';
 
 export interface Section {
   name: string;
@@ -11,5 +11,6 @@ export interface Section {
   templateUrl: './purchased-products-list-area.component.html'
 })
 export class PurchasedProductsListAreaComponent {
-  @Input() products!: ProductNoDate[];
+  @Input() products!: MarketProductNoDate[];
+  @Output() markListedProduct = new EventEmitter<MarketProductNoDate>()
 }

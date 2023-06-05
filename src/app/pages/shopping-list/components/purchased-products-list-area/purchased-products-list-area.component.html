@@ -17,7 +17,9 @@
                             <button mat-icon-button color="warn" matTooltip="Eliminar producto">
                                 <mat-icon>delete</mat-icon>
                             </button>
-                            <button mat-icon-button color="primary" matTooltip="Devolver a lista de compras">
+                            <button mat-icon-button color="primary" matTooltip="Devolver a lista de compras"
+                            (click)="markListedProduct.emit(prod)"
+                            >
                                 <mat-icon>undo</mat-icon>
                             </button>
                         </div>
