@@ -71,4 +71,15 @@ export class ShoppingPageComponent implements OnInit {
       state: product.state
     }
   }
+
+  deleteProduct(_product: MarketProductNoDate) {
+    this.productSvc.deleteProducto(_product.marketProductId,_product.id).subscribe(
+      resp => {
+        if(_product.state == "listed")
+          this.listedProducts = this.listedProducts.filter((prod)=>prod.marketProductId!=_product.marketProductId)
+        else
+          this.purchasedProducts = this.purchasedProducts.filter((prod)=>prod.marketProductId!=_product.marketProductId)
+      }
+    )
+  }
 }

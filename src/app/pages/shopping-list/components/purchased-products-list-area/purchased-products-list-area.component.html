@@ -14,7 +14,7 @@
                     <div matListItemLine>{{prod.price}}</div>
                     <div matListItemMeta>
                         <div>
-                            <button mat-icon-button color="warn" matTooltip="Eliminar producto">
+                            <button mat-icon-button color="warn" matTooltip="Eliminar producto" (click)="clickDeletedProduct.emit(prod)">
                                 <mat-icon>delete</mat-icon>
                             </button>
                             <button mat-icon-button color="primary" matTooltip="Devolver a lista de compras"

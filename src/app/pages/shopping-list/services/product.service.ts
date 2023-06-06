@@ -110,7 +110,8 @@ export class ProductService {
     )
   }
 
-  deleteProducto(id: number): Observable<any> {
-    return this.http.delete(`${this.productsURL}/${id}`);
+  deleteProducto(marketProductId: number, productId: number): Observable<any> {
+    this.listedProductsIds=this.listedProductsIds.filter((idprod) => idprod != productId)
+    return this.http.delete(`${this.marketsProductsURL}/${marketProductId}`);
   }
 }

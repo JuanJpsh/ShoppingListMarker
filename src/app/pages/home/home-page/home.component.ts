@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
 
   private saveMarketList(marketName: string) {
     this.marketsSvc.saveMarket(marketName).subscribe((resp: MarketNoUserId) => {
-      this.markets.push(resp)
+      this.markets=[resp, ...this.markets]
     })
   }
 

@@ -27,33 +27,135 @@
       "userId": 1
     },
     {
-      "name": "Segundo Listado",
+      "id": 3,
+      "name": "Mercado 27 Mayo 2023",
       "date": "2023-05-27T16:23:17.695Z",
+      "userId": 2
+    },
+    {
+      "name": "Mercado 5 Junio 2023",
+      "date": "2023-06-06T01:51:51.578Z",
       "userId": 2,
-      "id": 3
+      "id": 4
+    },
+    {
+      "name": "Mercado 9 Junio 2023",
+      "date": "2023-06-06T02:30:36.061Z",
+      "userId": 2,
+      "id": 5
+    },
+    {
+      "name": "Mercado 10 Junio",
+      "date": "2023-06-06T02:36:22.656Z",
+      "userId": 2,
+      "id": 6
     }
   ],
   "products": [
     {
-      "name": "Atún Medalla De Oro Rallado En Acite 170 G",
-      "price": 3990,
+      "name": "Arroz Florhuila Platino 1Kg",
+      "price": 6400,
       "providerId": 1,
       "creationDate": "2023-05-27T16:23:17.695Z",
       "id": 1
     },
     {
-      "name": "Queso Crema Colanta 400 gr",
-      "price": 10000,
+      "name": "Arroz Florhuila 3 Kg",
+      "price": 13650,
       "providerId": 1,
       "creationDate": "2023-05-27T16:23:17.695Z",
       "id": 2
+    },
+    {
+      "name": "Arroz Doña Pepa 500 gr",
+      "price": 3350,
+      "providerId": 1,
+      "creationDate": "2023-05-27T16:23:17.695Z",
+      "id": 3
+    },
+    {
+      "name": "Arroz Sabrosón 1 Kg",
+      "price": 4500,
+      "providerId": 1,
+      "creationDate": "2023-05-27T16:23:17.695Z",
+      "id": 4
+    },
+    {
+      "name": "Atún Medalla De Oro Lomitos En Agua 170 gr",
+      "price": 5590,
+      "providerId": 1,
+      "creationDate": "2023-05-27T16:23:17.695Z",
+      "id": 5
+    },
+    {
+      "name": "Atún Medalla De Oro Rallado En Acite 170 gr",
+      "price": 3990,
+      "providerId": 1,
+      "creationDate": "2023-05-27T16:23:17.695Z",
+      "id": 6
+    },
+    {
+      "name": "Atún Medalla De Oro Lomitos En Aceite Vegetal 170 gr",
+      "price": 5590,
+      "providerId": 1,
+      "creationDate": "2023-05-27T16:23:17.695Z",
+      "id": 7
+    },
+    {
+      "name": "Atún Van Camps Lomo En Agua 160 gr",
+      "price": 7990,
+      "providerId": 1,
+      "creationDate": "2023-05-27T16:23:17.695Z",
+      "id": 8
+    },
+    {
+      "name": "Queso Blanco Colanta 500 gr",
+      "price": 14800,
+      "providerId": 1,
+      "creationDate": "2023-05-27T16:23:17.695Z",
+      "id": 9
+    },
+    {
+      "name": "Queso Crema Colanta 230 gr",
+      "price": 5390,
+      "providerId": 1,
+      "creationDate": "2023-05-27T16:23:17.695Z",
+      "id": 10
+    },
+    {
+      "name": "Queso Doble Crema Olimpica 450 gr",
+      "price": 13500,
+      "providerId": 1,
+      "creationDate": "2023-05-27T16:23:17.695Z",
+      "id": 11
+    },
+    {
+      "name": "Queso Crema Colanta 400 gr",
+      "price": 10390,
+      "providerId": 1,
+      "creationDate": "2023-05-27T16:23:17.695Z",
+      "id": 12
     },
     {
       "name": "Queso Colanta Para Asar 500 gr",
       "price": 20400,
       "providerId": 1,
       "creationDate": "2023-05-27T16:23:17.695Z",
-      "id": 3
+      "id": 13
+    },
+    {
+      "name": "Queso Colanta Mozzarella de Búfala 250 gr",
+      "price": 11950,
+      "providerId": 1,
+      "creationDate": "2023-05-27T16:23:17.695Z",
+      "id": 14
+    },
+    {
+      "name": "Pan Trenza con Queso 500 gr",
+      "price": 7000,
+      "providerId": 1,
+      "creationDate": "2023-05-27T16:23:17.695Z",
+      "id": 15
     }
   ],
   "markets_products": [
@@ -61,13 +163,13 @@
       "id": 1,
       "marketId": 1,
       "productId": 1,
-      "state": "purchased"
+      "state": "listed"
     },
     {
       "id": 2,
       "marketId": 2,
       "productId": 1,
-      "state": "purchased"
+      "state": "listed"
     },
     {
       "id": 3,
@@ -80,12 +182,83 @@
       "marketId": 2,
       "productId": 3,
       "state": "listed"
+    },
+    {
+      "id": 12,
+      "marketId": 4,
+      "productId": 1,
+      "state": "purchased"
+    },
+    {
+      "marketId": 4,
+      "productId": 9,
+      "state": "listed",
+      "id": 13
+    },
+    {
+      "marketId": 4,
+      "productId": 15,
+      "state": "listed",
+      "id": 14
+    },
+    {
+      "marketId": 4,
+      "productId": 7,
+      "state": "listed",
+      "id": 15
+    },
+    {
+      "marketId": 4,
+      "productId": 13,
+      "state": "listed",
+      "id": 16
+    },
+    {
+      "marketId": 1,
+      "productId": 10,
+      "state": "listed",
+      "id": 17
+    },
+    {
+      "id": 20,
+      "marketId": 3,
+      "productId": 6,
+      "state": "purchased"
+    },
+    {
+      "marketId": 3,
+      "productId": 2,
+      "state": "listed",
+      "id": 23
+    },
+    {
+      "id": 24,
+      "marketId": 3,
+      "productId": 5,
+      "state": "purchased"
+    },
+    {
+      "marketId": 3,
+      "productId": 1,
+      "state": "listed",
+      "id": 25
+    },
+    {
+      "marketId": 3,
+      "productId": 3,
+      "state": "listed",
+      "id": 26
     }
   ],
   "providers": [
     {
       "id": 1,
       "name": "Olimpica",
+      "creationDate": "2023-05-27T16:23:17.695Z"
+    },
+    {
+      "id": 2,
+      "name": "Jumbo",
       "creationDate": "2023-05-27T16:23:17.695Z"
     }
   ]

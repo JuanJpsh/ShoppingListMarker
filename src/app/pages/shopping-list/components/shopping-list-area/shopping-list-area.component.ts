@@ -13,6 +13,7 @@ import { mergeMap, of } from 'rxjs';
 export class ShoppingListAreaComponent {
   @Input() products!: MarketProductNoDate[];
   @Output() markPurchasedProduct = new EventEmitter<MarketProductNoDate>()
+  @Output() clickDeletedProduct = new EventEmitter<MarketProductNoDate>()
 
   constructor(
     private productSvc: ProductService,
@@ -32,6 +33,14 @@ export class ShoppingListAreaComponent {
       (resp) => {
         if (resp)
           this.products.push(resp)
+      }
+    )
+  }
+
+  deleteProduct(_product: MarketProductNoDate) {
+    this.productSvc.deleteProducto(_product.marketProductId,_product.id).subscribe(
+      resp => {
+        this.products = this.products.filter((prod)=>prod.marketProductId!=_product.marketProductId)
       }
     )
   }

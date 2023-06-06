@@ -1,9 +1,9 @@
 <div class="container">
   <h1 class="title">{{listName}}</h1>
   <div class="lists-container">
-    <app-shopping-list-area class="padding-left" [products]="listedProducts"
+    <app-shopping-list-area class="padding-left" [products]="listedProducts" (clickDeletedProduct)="deleteProduct($event)"
       (markPurchasedProduct)="moveProductToPurchased($event)" />
-    <app-purchased-products-list-area [products]="purchasedProducts" class="padding-right"
+    <app-purchased-products-list-area [products]="purchasedProducts" class="padding-right" (clickDeletedProduct)="deleteProduct($event)"
       (markListedProduct)="moveProductToListed($event)" />
   </div>
 </div>
