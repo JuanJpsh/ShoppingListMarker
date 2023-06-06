@@ -5,7 +5,8 @@
         <mat-select placeholder="Elija un producto" [formControl]="productControl">
             <mat-option value="{{i}}" *ngFor="let opt of productOptions;  let i = index">
                 <p>{{opt.name}}</p>
-                <p>{{opt.price | currency}} Proveedor:{{opt.providerId}}</p>
+                <div class="chip primary">Proveedor: {{opt.providerId}}</div>
+                <div class="chip warn">Precio {{opt.price | currency}}</div>
             </mat-option>
             <mat-option>Otro</mat-option>
         </mat-select>
