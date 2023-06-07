@@ -3,7 +3,8 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { MarketClick, MarketNoUserId } from 'src/app/pages/home/models/MarketsResponse';
-import { map, take } from 'rxjs';
+import { map } from 'rxjs';
+import { MarketsService } from 'src/app/core/services/markets.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +15,12 @@ export class DashboardComponent implements OnInit {
   mobileQuery: MediaQueryList;
   markets!: MarketClick[];
 
-  constructor(media: MediaMatcher, private authSvc: AuthService, private route: ActivatedRoute) {
+  constructor(
+    media: MediaMatcher,
+    private authSvc: AuthService,
+    private route: ActivatedRoute,
+    private marketSvc: MarketsService
+  ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
   }
 
@@ -28,6 +34,10 @@ export class DashboardComponent implements OnInit {
     ).subscribe(markets => {
       this.markets = markets;
     })
+
+    this.marketSvc.getAddedMarket().subscribe(
+      (market: MarketClick) => this.markets = [market, ...this.markets]
+    )
   }
 
   onLogout() {

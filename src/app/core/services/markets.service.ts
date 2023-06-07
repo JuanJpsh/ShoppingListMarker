@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { environmet } from 'src/environments/environment';
-import { BehaviorSubject, map, take, tap } from 'rxjs';
+import { BehaviorSubject, Subject, map, take, tap } from 'rxjs';
 import { MarketClick, MarketNoUserId, MarketResponse, MarketToSave } from '../../pages/home/models/MarketsResponse';
 
 @Injectable({
@@ -10,15 +10,16 @@ import { MarketClick, MarketNoUserId, MarketResponse, MarketToSave } from '../..
 })
 export class MarketsService {
 
-  private markets = new BehaviorSubject<MarketNoUserId[] | null>(null)
+  private markets$ = new BehaviorSubject<MarketNoUserId[] | null>(null)
+  private addedMarket$ = new Subject<MarketClick>()
 
   private url = environmet.shoppingListsURL;
 
   constructor(private http: HttpClient, private dataStorageSvc: DataStoreService) { }
 
   getMarkets() {
-    if (this.markets.getValue())
-      return this.markets as BehaviorSubject<MarketNoUserId[]>
+    if (this.markets$.getValue()) 
+      return this.markets$ as BehaviorSubject<MarketNoUserId[]>
     const userId = this.dataStorageSvc.getData(environmet.userIdKey) as string
     return this.http.get<MarketResponse[]>(`${this.url}?userId=${userId}`).pipe(
       take(1),
@@ -28,8 +29,8 @@ export class MarketsService {
         date: val.date
       }))
       ),
-      map((resp: MarketNoUserId[]) => resp.sort((a, b) =>new Date(b.date).getTime() - new Date(a.date).getTime())),
-      tap((resp: MarketNoUserId[]) => this.markets.next(resp))
+      map((resp: MarketNoUserId[]) => resp.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())),
+      tap((resp: MarketNoUserId[]) => this.markets$.next(resp))
     )
   }
 
@@ -46,6 +47,10 @@ export class MarketsService {
         id: resp.id,
         name: resp.name,
         date: resp.date
+      })),
+      tap((market: MarketNoUserId) => this.addedMarket$.next({
+        id: market.id,
+        name: market.name
       }))
     )
   }
@@ -58,7 +63,11 @@ export class MarketsService {
     )
   }
 
-  cleanMarkets(){
-    this.markets.next(null);
+  getAddedMarket() {
+    return this.addedMarket$.asObservable();
+  }
+
+  cleanMarkets() {
+    this.markets$.next(null);
   }
 }
