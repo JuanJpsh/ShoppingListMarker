@@ -230,24 +230,6 @@
       "productId": 2,
       "state": "listed",
       "id": 23
-    },
-    {
-      "id": 24,
-      "marketId": 3,
-      "productId": 5,
-      "state": "purchased"
-    },
-    {
-      "marketId": 3,
-      "productId": 1,
-      "state": "listed",
-      "id": 25
-    },
-    {
-      "marketId": 3,
-      "productId": 3,
-      "state": "listed",
-      "id": 26
     }
   ],
   "providers": [

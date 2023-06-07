@@ -6,6 +6,7 @@ import { UserResponse } from '../models/userResponse';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { Router } from '@angular/router';
 import { environmet } from 'src/environments/environment';
+import { MarketsService } from './markets.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private dataStorageSvc: DataStoreService,
+    private marketsSvc: MarketsService,
     private router: Router
   ) { }
 
@@ -38,6 +40,7 @@ export class AuthService {
   logout() {
     this.dataStorageSvc.deleteData(environmet.userIdKey)
     this.dataStorageSvc.deleteData(environmet.userFullnameKey)
+    this.marketsSvc.cleanMarkets()
     this.router.navigate([''])
   }
 }

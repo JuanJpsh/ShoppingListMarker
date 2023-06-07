@@ -17,14 +17,6 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  addProducto(data: any): Observable<any> {
-    return this.http.post(this.productsURL, data);
-  }
-
-  updateProducto(id: number, data: any): Observable<any> {
-    return this.http.put(`${this.productsURL}/${id}`, data);
-  }
-
   getNotListedProducts(): Observable<ProductNoDate[]> {
     return this.http.get<ProductResponse[]>(this.productsURL).pipe(
       take(1),
@@ -111,7 +103,8 @@ export class ProductService {
   }
 
   deleteProducto(marketProductId: number, productId: number): Observable<any> {
-    this.listedProductsIds=this.listedProductsIds.filter((idprod) => idprod != productId)
-    return this.http.delete(`${this.marketsProductsURL}/${marketProductId}`);
+    return this.http.delete(`${this.marketsProductsURL}/${marketProductId}`).pipe(
+      tap(() => this.listedProductsIds = this.listedProductsIds.filter((idprod) => idprod != productId))
+    );
   }
 }

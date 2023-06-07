@@ -57,4 +57,8 @@ export class MarketsService {
       take(1)
     )
   }
+
+  cleanMarkets(){
+    this.markets.next(null);
+  }
 }
