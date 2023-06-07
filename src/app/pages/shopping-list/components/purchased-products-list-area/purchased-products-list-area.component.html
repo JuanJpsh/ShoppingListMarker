@@ -2,7 +2,7 @@
     <div mat-subheader class="header-content height2-4rem">
         Comprado
         <span class="spacer"></span>
-        Total: $10.000
+        Total: {{addProductAccount() | currency}}
     </div>
     <mat-divider></mat-divider>
     <mat-card-content class="area-list-card-content">
@@ -11,15 +11,15 @@
                 <mat-list-item disabled="true">
                     <div matListItemTitle [matTooltip]="prod.name">{{prod.name}}</div>
                     <div matListItemLine>proveedor con id: {{prod.providerId}}</div>
-                    <div matListItemLine>{{prod.price}}</div>
+                    <div matListItemLine>{{prod.price | currency}}</div>
                     <div matListItemMeta>
                         <div>
-                            <button mat-icon-button color="warn" matTooltip="Eliminar producto" (click)="clickDeletedProduct.emit(prod)">
+                            <button mat-icon-button color="warn" matTooltip="Eliminar producto"
+                                (click)="clickDeletedProduct.emit(prod)">
                                 <mat-icon>delete</mat-icon>
                             </button>
                             <button mat-icon-button color="primary" matTooltip="Devolver a lista de compras"
-                            (click)="markListedProduct.emit(prod)"
-                            >
+                                (click)="markListedProduct.emit(prod)">
                                 <mat-icon>undo</mat-icon>
                             </button>
                         </div>

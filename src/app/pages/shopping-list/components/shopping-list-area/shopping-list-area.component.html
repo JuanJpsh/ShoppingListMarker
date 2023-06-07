@@ -13,7 +13,7 @@
                 <mat-list-item>
                     <div matListItemTitle [matTooltip]="prod.name">{{prod.name}}</div>
                     <div matListItemLine>proveedor con id: {{prod.providerId}}</div>
-                    <div matListItemLine>{{prod.price}}</div>
+                    <div matListItemLine>{{prod.price | currency}}</div>
                     <div matListItemMeta>
                         <div>
                             <button mat-icon-button color="warn" matTooltip="Eliminar producto"

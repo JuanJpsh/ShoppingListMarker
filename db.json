@@ -37,6 +37,12 @@
       "date": "2023-06-06T01:51:51.578Z",
       "userId": 2,
       "id": 4
+    },
+    {
+      "name": "Ultima prueba",
+      "date": "2023-06-07T17:23:18.613Z",
+      "userId": 2,
+      "id": 5
     }
   ],
   "products": [
@@ -175,19 +181,13 @@
       "id": 12,
       "marketId": 4,
       "productId": 1,
-      "state": "purchased"
+      "state": "listed"
     },
     {
       "id": 13,
       "marketId": 4,
       "productId": 9,
-      "state": "purchased"
-    },
-    {
-      "marketId": 4,
-      "productId": 15,
-      "state": "listed",
-      "id": 14
+      "state": "listed"
     },
     {
       "marketId": 4,

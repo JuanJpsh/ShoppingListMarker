@@ -1,9 +1,8 @@
-import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProductService } from '../../services/product.service';
-import { MarketProductNoDate, ProductNoDate } from '../../models/product';
-import { MatSelect } from '@angular/material/select';
+import { ProductNoDate } from '../../models/product';
 
 @Component({
   selector: 'app-add-update-product-dialog',
@@ -23,7 +22,7 @@ export class AddUpdateProductDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (this.product)this.dialogTitle = "Actualizar producto"
+    if (this.product) this.dialogTitle = "Actualizar producto"
     else this.dialogTitle = "Añadir producto a lista"
     this.productControl = this.initProductControl();
     this.productSvc.getNotListedProducts().subscribe(
