@@ -82,18 +82,25 @@ export class ProductService {
       );
   }
 
-  changeProductState(marketProduct: MarketProduct) {
-    if (marketProduct.state == "listed")
-      marketProduct.state = "purchased"
+  changeProductState(marketProductId: number, state: "listed" | "purchased") {
+    if (state == "listed")
+      state = "purchased"
     else
-      marketProduct.state = "listed"
+      state = "listed"
 
-    return this.updateProduct(marketProduct)
+    return this.http.patch<MarketProduct>(
+      `${this.marketsProductsURL}/${marketProductId}`, { state }
+    ).pipe(
+      take(1),
+      map((resp) => {
+        return resp ? true : false
+      })
+    )
   }
 
-  updateProduct(marketProduct: MarketProduct) {
-    return this.http.put<MarketProduct>(
-      `${this.marketsProductsURL}/${marketProduct.id}`, marketProduct
+  changeMarketProduct(marketProductId: number, productId: number) {
+    return this.http.patch<MarketProduct>(
+      `${this.marketsProductsURL}/${marketProductId}`, { productId }
     ).pipe(
       take(1),
       map((resp) => {

@@ -4,7 +4,6 @@ import { MarketProductNoDate, Products } from '../models/product';
 import { MarketTitleService } from 'src/app/core/services/market-title.service';
 import { ActivatedRoute } from '@angular/router';
 import { mergeMap } from 'rxjs';
-import { MarketProduct } from '../models/market-product';
 
 @Component({
   selector: 'app-shopping-page',
@@ -39,8 +38,7 @@ export class ShoppingPageComponent implements OnInit {
   }
 
   moveProductToPurchased(product: MarketProductNoDate) {
-    const marketProductToUpdate = this.initMarketProductToUpdate(product)
-    this.productSvc.changeProductState(marketProductToUpdate).subscribe((resp) => {
+    this.productSvc.changeProductState(product.marketProductId, product.state).subscribe((resp) => {
       if (resp) {
         const index = this.listedProducts.findIndex((val) => val.id == product.id)
         this.listedProducts[index].state = "purchased"
@@ -51,8 +49,7 @@ export class ShoppingPageComponent implements OnInit {
   }
 
   moveProductToListed(product: MarketProductNoDate) {
-    const marketProductToUpdate = this.initMarketProductToUpdate(product)
-    this.productSvc.changeProductState(marketProductToUpdate).subscribe((resp) => {
+    this.productSvc.changeProductState(product.marketProductId, product.state).subscribe((resp) => {
       if (resp) {
         const index = this.purchasedProducts.findIndex((val) => val.id == product.id)
         this.purchasedProducts[index].state = "listed"
@@ -62,24 +59,26 @@ export class ShoppingPageComponent implements OnInit {
     })
   }
 
-  private initMarketProductToUpdate(product: MarketProductNoDate): MarketProduct {
-    const marketId = Number.parseInt(this.route.snapshot.params['id'])
-    return {
-      id: product.marketProductId,
-      marketId,
-      productId: product.id,
-      state: product.state
-    }
-  }
-
   deleteProduct(_product: MarketProductNoDate) {
-    this.productSvc.deleteProducto(_product.marketProductId,_product.id).subscribe(
-      resp => {
-        if(_product.state == "listed")
-          this.listedProducts = this.listedProducts.filter((prod)=>prod.marketProductId!=_product.marketProductId)
+    this.productSvc.deleteProducto(_product.marketProductId, _product.id).subscribe(
+      () => {
+        if (_product.state == "listed")
+          this.listedProducts = this.listedProducts.filter((prod) => prod.marketProductId != _product.marketProductId)
         else
-          this.purchasedProducts = this.purchasedProducts.filter((prod)=>prod.marketProductId!=_product.marketProductId)
+          this.purchasedProducts = this.purchasedProducts.filter((prod) => prod.marketProductId != _product.marketProductId)
       }
     )
+  }
+
+  onUpdateProduct(marketProduct: MarketProductNoDate) {
+    this.productSvc.changeMarketProduct(marketProduct.marketProductId, marketProduct.id)
+      .subscribe((resp) => {
+        if (resp) {
+          const index = this.listedProducts.findIndex(
+            (prod) => prod.marketProductId == marketProduct.marketProductId
+          )
+          this.listedProducts[index] = marketProduct;
+        }
+      })
   }
 }

@@ -14,6 +14,7 @@ export class ShoppingListAreaComponent {
   @Input() products!: MarketProductNoDate[];
   @Output() markPurchasedProduct = new EventEmitter<MarketProductNoDate>()
   @Output() clickDeletedProduct = new EventEmitter<MarketProductNoDate>()
+  @Output() onUpdateProduct = new EventEmitter<MarketProductNoDate>()
 
   constructor(
     private productSvc: ProductService,
@@ -37,10 +38,34 @@ export class ShoppingListAreaComponent {
     )
   }
 
+  openUpdateMarketDialog(product: MarketProductNoDate) {
+    const productToUpdate: ProductNoDate = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      providerId: product.providerId
+    }
+    this._dialog.open(AddUpdateProductDialogComponent, {
+      data: productToUpdate
+    }).afterClosed().subscribe(
+      (newProd: ProductNoDate | undefined) => {
+        if (newProd && newProd.id != productToUpdate.id) {
+          this.onUpdateProduct.emit({
+            ...product,
+            id: newProd.id,
+            name: newProd.name,
+            price: newProd.price,
+            providerId: newProd.providerId,
+          })
+        }
+      }
+    )
+  }
+
   deleteProduct(_product: MarketProductNoDate) {
-    this.productSvc.deleteProducto(_product.marketProductId,_product.id).subscribe(
+    this.productSvc.deleteProducto(_product.marketProductId, _product.id).subscribe(
       resp => {
-        this.products = this.products.filter((prod)=>prod.marketProductId!=_product.marketProductId)
+        this.products = this.products.filter((prod) => prod.marketProductId != _product.marketProductId)
       }
     )
   }

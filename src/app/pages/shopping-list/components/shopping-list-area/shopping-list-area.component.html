@@ -2,8 +2,7 @@
     <div mat-subheader class="header-content height2-4rem">
         Lista de compras
         <span class="spacer"></span>
-        <button mat-mini-fab color="primary" matTooltip="Añadir producto"
-        (click)="openAddMarketDialog()">
+        <button mat-mini-fab color="primary" matTooltip="Añadir producto" (click)="openAddMarketDialog()">
             <mat-icon>add</mat-icon>
         </button>
     </div>
@@ -17,14 +16,16 @@
                     <div matListItemLine>{{prod.price}}</div>
                     <div matListItemMeta>
                         <div>
-                            <button mat-icon-button color="warn" matTooltip="Eliminar producto" (click)="clickDeletedProduct.emit(prod)">
+                            <button mat-icon-button color="warn" matTooltip="Eliminar producto"
+                                (click)="clickDeletedProduct.emit(prod)">
                                 <mat-icon>delete</mat-icon>
                             </button>
-                            <button mat-icon-button matTooltip="Editar producto">
+                            <button mat-icon-button matTooltip="Editar producto"
+                                (click)="openUpdateMarketDialog(prod)">
                                 <mat-icon>edit</mat-icon>
                             </button>
-                            <button mat-icon-button color="primary" 
-                            matTooltip="Marcar como comprado" (click)="markPurchasedProduct.emit(prod)">
+                            <button mat-icon-button color="primary" matTooltip="Marcar como comprado"
+                                (click)="markPurchasedProduct.emit(prod)">
                                 <mat-icon>check_circle</mat-icon>
                             </button>
                         </div>

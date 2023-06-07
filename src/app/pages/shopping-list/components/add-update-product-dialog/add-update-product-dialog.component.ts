@@ -1,15 +1,16 @@
-import { Component, Inject } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProductService } from '../../services/product.service';
-import { ProductNoDate } from '../../models/product';
+import { MarketProductNoDate, ProductNoDate } from '../../models/product';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'app-add-update-product-dialog',
   templateUrl: './add-update-product-dialog.component.html',
   styleUrls: ['./add-update-product-dialog.component.scss']
 })
-export class AddUpdateProductDialogComponent {
+export class AddUpdateProductDialogComponent implements OnInit {
 
   productControl!: FormControl;
   dialogTitle!: string;
@@ -17,17 +18,20 @@ export class AddUpdateProductDialogComponent {
 
   constructor(
     private dialogRef: MatDialogRef<AddUpdateProductDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) private productName: string,
+    @Inject(MAT_DIALOG_DATA) private product: ProductNoDate,
     private productSvc: ProductService,
   ) { }
 
   ngOnInit(): void {
-    if (this.productName) this.dialogTitle = "Actualizar producto"
+    if (this.product)this.dialogTitle = "Actualizar producto"
     else this.dialogTitle = "Añadir producto a lista"
-    this.productControl = this.initNameControl();
+    this.productControl = this.initProductControl();
     this.productSvc.getNotListedProducts().subscribe(
       (resp: ProductNoDate[]) => {
-        this.productOptions = resp}
+        this.productOptions = resp
+        if (this.product)
+          this.productOptions = [this.product, ...this.productOptions]
+      }
     )
   }
 
@@ -45,9 +49,9 @@ export class AddUpdateProductDialogComponent {
     this.dialogRef.close(this.productOptions[this.productControl.value])
   }
 
-  private initNameControl() {
-    if (this.productName)
-      return new FormControl(this.productName, [Validators.required])
+  private initProductControl() {
+    if (this.product)
+      return new FormControl(null, [Validators.required])
     return new FormControl(null, [Validators.required])
   }
 }
