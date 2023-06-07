@@ -12,7 +12,7 @@ const routes: Routes = [
     path: 'dashboard',
     canActivate: [sessionGuard],
     component: DashboardComponent,
-    resolve: { markets: marketsResolver },
+    resolve: { marketsResolver },
     children: [
       {
         path: 'home',
@@ -30,7 +30,7 @@ const routes: Routes = [
         redirectTo: 'home'
       }
     ],
-    
+
   },
   {
     path: '',

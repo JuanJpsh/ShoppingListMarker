@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
     this._dialog.open(AddUpdateMarketDialogComponent).afterClosed().subscribe(
       (resp: string | undefined) => {
         if (resp && resp != '') {
-          this.saveMarketList(resp);
+          this.marketsSvc.saveMarket(resp).subscribe()
         }
       }
     )
@@ -58,12 +58,6 @@ export class HomeComponent implements OnInit {
         }
       }
     )
-  }
-
-  private saveMarketList(marketName: string) {
-    this.marketsSvc.saveMarket(marketName).subscribe((resp: MarketNoUserId) => {
-      this.markets=[resp, ...this.markets]
-    })
   }
 
   private updateMarketList(clickedMarket: MarketNoUserId) {

@@ -16,3 +16,8 @@ export interface Products {
     listedProducts : MarketProductNoDate[]
     purchasedProducts: MarketProductNoDate[]
 }
+
+export interface marketProductToUpdate {
+    marketProduct: MarketProductNoDate
+    lastProductId: number
+}

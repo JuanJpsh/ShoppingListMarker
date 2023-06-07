@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { ActivatedRoute } from '@angular/router';
 import { MarketClick, MarketNoUserId } from 'src/app/pages/home/models/MarketsResponse';
 import { map } from 'rxjs';
 import { MarketsService } from 'src/app/core/services/markets.service';
@@ -18,15 +17,13 @@ export class DashboardComponent implements OnInit {
   constructor(
     media: MediaMatcher,
     private authSvc: AuthService,
-    private route: ActivatedRoute,
     private marketSvc: MarketsService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
   }
 
   ngOnInit(): void {
-    this.route.data.pipe(
-      map(data => data["markets"] as MarketNoUserId[]),
+    this.marketSvc.getMarkets().pipe(
       map<MarketNoUserId[], MarketClick[]>((resp: MarketNoUserId[]) => resp.map((val) => ({
         id: val.id,
         name: val.name
@@ -34,10 +31,6 @@ export class DashboardComponent implements OnInit {
     ).subscribe(markets => {
       this.markets = markets;
     })
-
-    this.marketSvc.getAddedMarket().subscribe(
-      (market: MarketClick) => this.markets = [market, ...this.markets]
-    )
   }
 
   onLogout() {

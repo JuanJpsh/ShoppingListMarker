@@ -98,11 +98,15 @@ export class ProductService {
     )
   }
 
-  changeMarketProduct(marketProductId: number, productId: number) {
+  changeMarketProduct(marketProductId: number, productId: number, lastProductId: number) {
     return this.http.patch<MarketProduct>(
       `${this.marketsProductsURL}/${marketProductId}`, { productId }
     ).pipe(
       take(1),
+      tap(() => {
+        this.listedProductsIds = this.listedProductsIds.filter((ids) => ids != lastProductId)
+        this.listedProductsIds.push(productId)
+      }),
       map((resp) => {
         return resp ? true : false
       })

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
-import { MarketProductNoDate, Products } from '../models/product';
+import { MarketProductNoDate, Products, marketProductToUpdate } from '../models/product';
 import { MarketTitleService } from 'src/app/core/services/market-title.service';
 import { ActivatedRoute } from '@angular/router';
 import { mergeMap } from 'rxjs';
@@ -70,15 +70,18 @@ export class ShoppingPageComponent implements OnInit {
     )
   }
 
-  onUpdateProduct(marketProduct: MarketProductNoDate) {
-    this.productSvc.changeMarketProduct(marketProduct.marketProductId, marketProduct.id)
-      .subscribe((resp) => {
-        if (resp) {
-          const index = this.listedProducts.findIndex(
-            (prod) => prod.marketProductId == marketProduct.marketProductId
-          )
-          this.listedProducts[index] = marketProduct;
-        }
-      })
+  onUpdateProduct(marketProductToUpdate: marketProductToUpdate) {
+    this.productSvc.changeMarketProduct(
+      marketProductToUpdate.marketProduct.marketProductId,
+      marketProductToUpdate.marketProduct.id,
+      marketProductToUpdate.lastProductId
+    ).subscribe((resp) => {
+      if (resp) {
+        const index = this.listedProducts.findIndex(
+          (prod) => prod.marketProductId == marketProductToUpdate.marketProduct.marketProductId
+        )
+        this.listedProducts[index] = marketProductToUpdate.marketProduct;
+      }
+    })
   }
 }

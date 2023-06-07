@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { DataStoreService } from 'src/app/core/services/data-store.service';
 import { environmet } from 'src/environments/environment';
-import { BehaviorSubject, Subject, map, take, tap } from 'rxjs';
-import { MarketClick, MarketNoUserId, MarketResponse, MarketToSave } from '../../pages/home/models/MarketsResponse';
+import { BehaviorSubject, map, take, tap } from 'rxjs';
+import { MarketNoUserId, MarketResponse, MarketToSave } from '../../pages/home/models/MarketsResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +11,13 @@ import { MarketClick, MarketNoUserId, MarketResponse, MarketToSave } from '../..
 export class MarketsService {
 
   private markets$ = new BehaviorSubject<MarketNoUserId[] | null>(null)
-  private addedMarket$ = new Subject<MarketClick>()
 
   private url = environmet.shoppingListsURL;
 
   constructor(private http: HttpClient, private dataStorageSvc: DataStoreService) { }
 
   getMarkets() {
-    if (this.markets$.getValue()) 
+    if (this.markets$.getValue())
       return this.markets$ as BehaviorSubject<MarketNoUserId[]>
     const userId = this.dataStorageSvc.getData(environmet.userIdKey) as string
     return this.http.get<MarketResponse[]>(`${this.url}?userId=${userId}`).pipe(
@@ -48,10 +47,12 @@ export class MarketsService {
         name: resp.name,
         date: resp.date
       })),
-      tap((market: MarketNoUserId) => this.addedMarket$.next({
-        id: market.id,
-        name: market.name
-      }))
+      tap((market: MarketNoUserId) => {
+        let markets = this.markets$.value
+        if (!markets) markets = []
+        markets = [market, ...markets]
+        this.markets$.next(markets)
+      })
     )
   }
 
@@ -61,10 +62,6 @@ export class MarketsService {
     return this.http.put<any>(`${this.url}/${market.id}`, marketToUpdate).pipe(
       take(1)
     )
-  }
-
-  getAddedMarket() {
-    return this.addedMarket$.asObservable();
   }
 
   cleanMarkets() {

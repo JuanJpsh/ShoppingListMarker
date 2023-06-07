@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MarketProductNoDate, ProductNoDate } from '../../models/product';
+import { MarketProductNoDate, ProductNoDate, marketProductToUpdate } from '../../models/product';
 import { ProductService } from '../../services/product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddUpdateProductDialogComponent } from '../add-update-product-dialog/add-update-product-dialog.component';
@@ -14,7 +14,7 @@ export class ShoppingListAreaComponent {
   @Input() products!: MarketProductNoDate[];
   @Output() markPurchasedProduct = new EventEmitter<MarketProductNoDate>()
   @Output() clickDeletedProduct = new EventEmitter<MarketProductNoDate>()
-  @Output() onUpdateProduct = new EventEmitter<MarketProductNoDate>()
+  @Output() onUpdateProduct = new EventEmitter<marketProductToUpdate>()
 
   constructor(
     private productSvc: ProductService,
@@ -51,11 +51,14 @@ export class ShoppingListAreaComponent {
       (newProd: ProductNoDate | undefined) => {
         if (newProd && newProd.id != productToUpdate.id) {
           this.onUpdateProduct.emit({
-            ...product,
-            id: newProd.id,
-            name: newProd.name,
-            price: newProd.price,
-            providerId: newProd.providerId,
+            lastProductId: productToUpdate.id,
+            marketProduct: {
+              ...product,
+              id: newProd.id,
+              name: newProd.name,
+              price: newProd.price,
+              providerId: newProd.providerId,
+            }
           })
         }
       }
