@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, map, mergeMap, of } from 'rxjs';
-import { MarketNoUserId } from 'src/app/pages/home/models/MarketsResponse';
 import { MarketsService } from 'src/app/core/services/markets.service';
 
 @Injectable({

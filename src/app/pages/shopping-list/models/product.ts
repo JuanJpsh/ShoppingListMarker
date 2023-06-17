@@ -1,3 +1,13 @@
+import { Provider } from "./provider"
+
+export interface ProductJoinResponse {
+    id: number
+    name: string
+    price: number
+    provider: Provider
+    creationDate: Date
+}
+
 export interface ProductResponse {
     id: number
     name: string
@@ -6,14 +16,16 @@ export interface ProductResponse {
     creationDate: Date
 }
 
-export type ProductNoDate = Pick<ProductResponse, 'id' | 'name' | 'price' | 'providerId'>
-export interface MarketProductNoDate extends ProductNoDate{
+export interface ProductNoDate extends Pick<ProductJoinResponse, 'id' | 'name' | 'price'> {
+    providerName: string
+}
+export interface MarketProductNoDate extends ProductNoDate {
     marketProductId: number
     state: "purchased" | "listed"
 }
 
 export interface Products {
-    listedProducts : MarketProductNoDate[]
+    listedProducts: MarketProductNoDate[]
     purchasedProducts: MarketProductNoDate[]
 }
 

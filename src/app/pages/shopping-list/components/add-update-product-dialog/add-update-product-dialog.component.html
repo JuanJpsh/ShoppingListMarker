@@ -6,13 +6,13 @@
             <mat-select-trigger *ngIf="productControl.value">
                 {{productOptions[productControl.value].name}}
                 <div>
-                    <div class="chip primary">Proveedor: {{productOptions[productControl.value].providerId}}</div>
+                    <div class="chip primary">Proveedor: {{productOptions[productControl.value].providerName}}</div>
                     <div class="chip warn">Precio: {{productOptions[productControl.value].price | currency}}</div>
                 </div>
             </mat-select-trigger>
             <mat-option value="{{i}}" *ngFor="let opt of productOptions;  let i = index">
                 <p>{{opt.name}}</p>
-                <div class="chip primary">Proveedor: {{opt.providerId}}</div>
+                <div class="chip primary">Proveedor: {{opt.providerName}}</div>
                 <div class="chip warn">Precio {{opt.price | currency}}</div>
             </mat-option>
             <mat-option>Otro</mat-option>

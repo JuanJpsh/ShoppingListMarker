@@ -16,27 +16,9 @@
   "markets": [
     {
       "id": 1,
-      "name": "Primer listado",
+      "name": "Mercado 27 de Mayo",
       "date": "2022-05-27T16:23:17.695Z",
       "userId": 1
-    },
-    {
-      "id": 2,
-      "name": "Listado maximo con20",
-      "date": "2023-02-27T16:23:17.695Z",
-      "userId": 1
-    },
-    {
-      "id": 3,
-      "name": "Mercado 27 Mayo 2023",
-      "date": "2023-05-27T16:23:17.695Z",
-      "userId": 2
-    },
-    {
-      "name": "Mercado 5 Junio 2023",
-      "date": "2023-06-06T01:51:51.578Z",
-      "userId": 2,
-      "id": 4
     }
   ],
   "products": [
@@ -148,82 +130,22 @@
   ],
   "markets_products": [
     {
-      "id": 1,
       "marketId": 1,
       "productId": 1,
-      "state": "listed"
-    },
-    {
-      "id": 2,
-      "marketId": 2,
-      "productId": 1,
-      "state": "listed"
-    },
-    {
-      "id": 3,
-      "marketId": 2,
-      "productId": 2,
-      "state": "listed"
-    },
-    {
-      "id": 4,
-      "marketId": 2,
-      "productId": 3,
-      "state": "listed"
-    },
-    {
-      "id": 12,
-      "marketId": 4,
-      "productId": 1,
-      "state": "listed"
-    },
-    {
-      "id": 13,
-      "marketId": 4,
-      "productId": 9,
-      "state": "listed"
-    },
-    {
-      "marketId": 4,
-      "productId": 2,
-      "state": "purchased",
-      "id": 15
+      "state": "listed",
+      "id": 1
     },
     {
       "marketId": 1,
-      "productId": 10,
-      "state": "listed",
-      "id": 17
-    },
-    {
-      "id": 20,
-      "marketId": 3,
-      "productId": 6,
-      "state": "purchased"
-    },
-    {
-      "marketId": 3,
-      "productId": 2,
-      "state": "listed",
-      "id": 23
-    },
-    {
-      "id": 25,
-      "marketId": 4,
-      "productId": 2,
-      "state": "listed"
-    },
-    {
-      "marketId": 12,
       "productId": 3,
       "state": "listed",
-      "id": 26
+      "id": 2
     },
     {
-      "marketId": 12,
-      "productId": 2,
+      "marketId": 1,
+      "productId": 4,
       "state": "listed",
-      "id": 27
+      "id": 4
     }
   ],
   "providers": [

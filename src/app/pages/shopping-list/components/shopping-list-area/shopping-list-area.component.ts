@@ -43,7 +43,7 @@ export class ShoppingListAreaComponent {
       id: product.id,
       name: product.name,
       price: product.price,
-      providerId: product.providerId
+      providerName: product.providerName
     }
     this._dialog.open(AddUpdateProductDialogComponent, {
       data: productToUpdate
@@ -57,7 +57,7 @@ export class ShoppingListAreaComponent {
               id: newProd.id,
               name: newProd.name,
               price: newProd.price,
-              providerId: newProd.providerId,
+              providerName: newProd.providerName
             }
           })
         }
@@ -66,7 +66,7 @@ export class ShoppingListAreaComponent {
   }
 
   deleteProduct(_product: MarketProductNoDate) {
-    this.productSvc.deleteProducto(_product.marketProductId, _product.id).subscribe(
+    this.productSvc.deleteProduct(_product.marketProductId, _product.id).subscribe(
       resp => {
         this.products = this.products.filter((prod) => prod.marketProductId != _product.marketProductId)
       }

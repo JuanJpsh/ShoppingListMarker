@@ -16,7 +16,7 @@ export class PurchasedProductsListAreaComponent {
   ) { }
 
   deleteProduct(_product: MarketProductNoDate) {
-    this.productSvc.deleteProducto(_product.marketProductId, _product.id).subscribe(
+    this.productSvc.deleteProduct(_product.marketProductId, _product.id).subscribe(
       () => {
         this.products = this.products.filter((prod) => prod.marketProductId != _product.marketProductId)
       }

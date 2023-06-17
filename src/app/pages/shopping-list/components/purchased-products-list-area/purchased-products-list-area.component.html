@@ -10,7 +10,7 @@
             <div *ngFor="let prod of products" style="background-color: #f9f9f9;;">
                 <mat-list-item disabled="true">
                     <div matListItemTitle [matTooltip]="prod.name">{{prod.name}}</div>
-                    <div matListItemLine>proveedor con id: {{prod.providerId}}</div>
+                    <div matListItemLine>proveedor: {{prod.providerName}}</div>
                     <div matListItemLine>{{prod.price | currency}}</div>
                     <div matListItemMeta>
                         <div>
