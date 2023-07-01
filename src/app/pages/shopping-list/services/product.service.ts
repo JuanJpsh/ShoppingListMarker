@@ -92,7 +92,7 @@ export class ProductService {
     else
       state = "listed"
 
-    return this.http.patch<MarketProduct>(
+    return this.http.put<MarketProduct>(
       `${this.marketsProductsURL}/${marketProductId}`, { state }
     ).pipe(
       take(1),
@@ -103,7 +103,7 @@ export class ProductService {
   }
 
   changeMarketProduct(marketProductId: number, productId: number, lastProductId: number) {
-    return this.http.patch<MarketProduct>(
+    return this.http.put<MarketProduct>(
       `${this.marketsProductsURL}/${marketProductId}`, { productId }
     ).pipe(
       take(1),
