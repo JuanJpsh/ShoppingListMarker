@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../../core/services/auth.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Dictionary } from 'src/app/core/models/dictionary';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +13,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LoginComponent implements OnInit {
   credentialsForm!: FormGroup;
   correctCredentials!: boolean;
+  errorMessages: Dictionary = {
+    required: "Este campo es obligatorio",
+    minlength: "Este campo debe tener al menos 8 carácteres",
+    maxlength: "Este campo debe tener maximo 30 carácteres",
+    incorrectCredentials: ""
+  }
 
   constructor(
     private authSvc: AuthService,
@@ -25,17 +32,10 @@ export class LoginComponent implements OnInit {
   }
 
   getErrorMessage(contolName: string) {
-    const controlForm = this.credentialsForm.get(contolName);
-    if (!controlForm) throw new Error(`contol name ${contolName} not found in the formGoup`)
-    if (controlForm.getError('required'))
-      return "Este campo es obligatorio"
-    else if (controlForm.getError("minlength"))
-      return "Este campo debe tener al menos 8 carácteres"
-    else if (controlForm.getError("maxlength"))
-      return "Este campo debe tener maximo 30 carácteres"
-    else if (controlForm.getError("incorrectCredentials"))
-      return ""
-    return ""
+    const controlError = this.credentialsForm.get(contolName)?.errors
+    if (!controlError) return ''
+    const error = Object.keys(controlError)[0]
+    return this.errorMessages[error]
   }
 
   submit() {
@@ -43,8 +43,7 @@ export class LoginComponent implements OnInit {
       this.credentialsForm.invalid
       && !this.credentialsForm.get("username")?.hasError("incorrectCredentials")
       && !this.credentialsForm.get("password")?.hasError("incorrectCredentials")
-    )
-      return
+    ) return
     this.authSvc.login(this.credentialsForm.value).subscribe((resp) => {
       if (resp) {
         this.snackBarSvc.dismiss();

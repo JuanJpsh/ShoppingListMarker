@@ -23,18 +23,22 @@ export class RegisterService {
       `${this.url}?username=${userDataRegister.username}`
     ).pipe(
       take(1),
-      mergeMap((resp: UserResponse[]) => {
-        if (resp.length != 0)
-          return of(null)
-        return this.http.post<UserDataRegisterResponse>(this.url, userDataRegister)
-      }),
-      map((resp) => {
-        if (resp == null)
-          return false;
-        this.dataStorageSvc.saveData("userId", resp.id.toString());
-        this.dataStorageSvc.saveData("fullname", resp.fullname)
-        return true;
-      })
+      mergeMap(users => this.handleValidationUsername(users, userDataRegister)),
+      map(savedUsed => this.handleRegisterUser(savedUsed))
     )
+  }
+
+  private handleValidationUsername($event: UserResponse[], userData: UserDataRegister) {
+    if ($event.length != 0)
+      return of(null)
+    return this.http.post<UserDataRegisterResponse>(this.url, userData)
+  }
+
+  private handleRegisterUser($event: UserDataRegisterResponse | null) {
+    if ($event == null)
+      return false;
+    this.dataStorageSvc.saveData("userId", $event.id.toString());
+    this.dataStorageSvc.saveData("fullname", $event.fullname)
+    return true;
   }
 }

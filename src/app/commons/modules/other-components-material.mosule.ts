@@ -4,6 +4,7 @@ import { MatListModule } from "@angular/material/list";
 import { MatSelectModule } from "@angular/material/select";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { MatChipsModule } from '@angular/material/chips';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
     declarations: [],
@@ -14,7 +15,8 @@ import { MatChipsModule } from '@angular/material/chips';
         MatSelectModule,
         MatListModule,
         MatTooltipModule,
-        MatChipsModule
+        MatChipsModule,
+        MatCheckboxModule
     ]
 })
 export class OtherComponentsMaterialModule { }

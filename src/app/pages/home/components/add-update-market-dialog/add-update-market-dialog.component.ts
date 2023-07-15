@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Dictionary } from 'src/app/core/models/dictionary';
 
 @Component({
   selector: 'app-add-update-market-dialog',
@@ -10,6 +11,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class AddUpdateMarketDialogComponent implements OnInit {
   nameControl!: FormControl;
   dialogTitle!: string;
+  errorMessages: Dictionary = {
+    required: "Este campo es obligatorio",
+    minlength: "Este campo debe tener al menos 3 carácteres",
+    maxlength: "Este campo debe tener maximo 20 carácteres",
+  }
 
   constructor(
     private dialogRef: MatDialogRef<AddUpdateMarketDialogComponent>,
@@ -23,13 +29,10 @@ export class AddUpdateMarketDialogComponent implements OnInit {
   }
 
   getErrorMessage() {
-    if (this.nameControl.getError('required'))
-      return "Este campo es obligatorio"
-    else if (this.nameControl.getError("minlength"))
-      return "Este campo debe tener al menos 3 carácteres"
-    else if (this.nameControl.getError("maxlength"))
-      return "Este campo debe tener maximo 20 carácteres"
-    return ""
+    const controlError = this.nameControl.errors
+    if (!controlError) return ''
+    const error = Object.keys(controlError)[0]
+    return this.errorMessages[error]
   }
 
   private initNameControl() {

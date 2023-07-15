@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>Crear nuevo producto</h1>
+<div mat-dialog-content>
+    <form [formGroup]="productForm" class="form">
+        <mat-form-field>
+            <mat-label>Nombre del producto</mat-label>
+            <input matInput type="text" placeholder="Digité el nombre" formControlName="name">
+            <mat-error>{{getErrorMessage('name')}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Precio</mat-label>
+            <input matInput type="number" placeholder="Digité un valor" formControlName="price">
+            <mat-error>{{getErrorMessage('price')}}</mat-error>
+        </mat-form-field>
+        <section class="example-section">
+            <mat-checkbox (change)="onChangeCheck($event.checked)" formControlName="newProvider">Nuevo proveedor</mat-checkbox>
+        </section>
+        <mat-form-field>
+            <mat-label>Proveedor</mat-label>
+            <mat-select *ngIf="!productForm.get('newProvider')?.value; else providerInput" placeholder="Elija un provedor"
+                formControlName="provider">
+                <mat-option value="{{i}}" *ngFor="let opt of providers; let i = index">
+                    {{opt.name}}
+                </mat-option>   
+            </mat-select>
+            <ng-template #providerInput>
+                <input matInput type="text" placeholder="Digité el proveedor" formControlName="provider">
+            </ng-template>
+            <mat-error> {{getErrorMessage('provider')}}</mat-error>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button cdkFocusInitial (click)="onCreateProduct()">Guardar</button>
+</div>

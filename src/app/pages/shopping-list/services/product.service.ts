@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin, map, take, tap } from 'rxjs';
-import { MarketProductNoDate, ProductNoDate, ProductJoinResponse, Products } from '../models/product';
+import { MarketProductNoDate, ProductNoDate, ProductJoinResponse, Products, productToSave, ProductResponse } from '../models/product';
 import { environmet } from 'src/environments/environment';
 import { MarketProductJoin, MarketProduct, MarketProductToSave } from '../models/market-product';
 import { ProviderService } from './provider.service';
@@ -20,21 +20,15 @@ export class ProductService {
   constructor(private http: HttpClient, private providerSvc: ProviderService) { }
 
   getNotListedProducts(): Observable<ProductNoDate[]> {
-    const excludedIds = this.listedProductsIds.reduce((excluded, id) => {
-      if (excluded == '')
-        return `?id_ne=${id}`
-      return `${excluded}&id_ne=${id}`
-    }, '')
-    return this.http.get<ProductJoinResponse[]>(`${this.productsURL}${excludedIds}&_expand=provider`).pipe(
+    const excludedIds = this.getQueryExcludedIds()
+
+    let query = `${this.productsURL}${excludedIds}`
+    if (excludedIds == "") query += "?_expand=provider"
+    else query += "&_expand=provider"
+
+    return this.http.get<ProductJoinResponse[]>(query).pipe(
       take(1),
-      map<ProductJoinResponse[], ProductNoDate[]>(
-        (products: ProductJoinResponse[]) => products.map((val) => ({
-          id: val.id,
-          name: val.name,
-          price: val.price,
-          providerName: val.provider.name
-        }))
-      )
+      map<ProductJoinResponse[], ProductNoDate[]>(products => this.productJoinToProductNoDate(products))
     )
   }
 
@@ -43,26 +37,25 @@ export class ProductService {
     const providers = this.providerSvc.getProviders()
     return forkJoin([products, providers]).pipe(
       take(1),
-      map<[MarketProductJoin[], Provider[]], MarketProductNoDate[]>(([prods, provs]) => prods.map(val => ({
-        id: val.productId,
-        name: val.product.name,
-        price: val.product.price,
-        providerName: (provs.find(prov => prov.id == val.product.providerId) as Provider).name,
-        marketProductId: val.id,
-        state: val.state
-      }))),
-      tap((marketProducts) => this.listedProductsIds = marketProducts.map((val) => val.id)),
+      map<[MarketProductJoin[], Provider[]], MarketProductNoDate[]>(
+        ([prods, provs]) => this.joinProviderToProducts(prods, provs)
+      ),
+      tap(marketProducts => this.listedProductsIds = marketProducts.map((val) => val.id)),
       map<MarketProductNoDate[], Products>(
-        (marketProducts: MarketProductNoDate[]) => {
-          const listedProducts = marketProducts.filter((val) => val.state == "listed")
-          const purchasedProducts = marketProducts.filter((val) => val.state == "purchased")
-          return {
-            listedProducts,
-            purchasedProducts
-          }
-        }
+        marketProducts => this.getProductsSepatedByState(marketProducts)
       )
     )
+  }
+
+  joinProviderToProducts(products: MarketProductJoin[], providers: Provider[]) {
+    return products.map(val => ({
+      id: val.productId,
+      name: val.product.name,
+      price: val.product.price,
+      providerName: (providers.find(prov => prov.id == val.product.providerId) as Provider).name,
+      marketProductId: val.id,
+      state: val.state
+    }))
   }
 
   addProductToList(marketId: number, product: ProductNoDate): Observable<MarketProductNoDate> {
@@ -92,13 +85,11 @@ export class ProductService {
     else
       state = "listed"
 
-    return this.http.put<MarketProduct>(
+    return this.http.patch<MarketProduct>(
       `${this.marketsProductsURL}/${marketProductId}`, { state }
     ).pipe(
       take(1),
-      map((resp) => {
-        return resp ? true : false
-      })
+      map((response) => response ? true : false)
     )
   }
 
@@ -107,13 +98,8 @@ export class ProductService {
       `${this.marketsProductsURL}/${marketProductId}`, { productId }
     ).pipe(
       take(1),
-      tap(() => {
-        this.listedProductsIds = this.listedProductsIds.filter((ids) => ids != lastProductId)
-        this.listedProductsIds.push(productId)
-      }),
-      map((resp) => {
-        return resp ? true : false
-      })
+      tap(() => this.handleMarketChange(productId, lastProductId)),
+      map((response) => response ? true : false)
     )
   }
 
@@ -121,5 +107,42 @@ export class ProductService {
     return this.http.delete(`${this.marketsProductsURL}/${marketProductId}`).pipe(
       tap(() => this.listedProductsIds = this.listedProductsIds.filter((idprod) => idprod != productId))
     );
+  }
+
+  createProduct(product: productToSave) {
+    const creationDate = new Date();
+    const newProduct = { ...product, creationDate }
+    return this.http.post<ProductResponse>(this.productsURL, newProduct)
+  }
+
+  private handleMarketChange(productId: number, lastProductId: number) {
+    this.listedProductsIds = this.listedProductsIds.filter((ids) => ids != lastProductId)
+    this.listedProductsIds.push(productId)
+  }
+
+  private getProductsSepatedByState(marketProducts: MarketProductNoDate[]) {
+    const listedProducts = marketProducts.filter((val) => val.state == "listed")
+    const purchasedProducts = marketProducts.filter((val) => val.state == "purchased")
+    return {
+      listedProducts,
+      purchasedProducts
+    }
+  }
+
+  private productJoinToProductNoDate(products: ProductJoinResponse[]) {
+    return products.map(val => ({
+      id: val.id,
+      name: val.name,
+      price: val.price,
+      providerName: val.provider.name
+    }))
+  }
+
+  private getQueryExcludedIds() {
+    return this.listedProductsIds.reduce((excluded, id) => {
+      if (excluded == '')
+        return `?id_ne=${id}`
+      return `${excluded}&id_ne=${id}`
+    }, '')
   }
 }

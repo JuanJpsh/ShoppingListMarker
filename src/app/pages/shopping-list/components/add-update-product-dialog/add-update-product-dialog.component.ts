@@ -40,7 +40,7 @@ export class AddUpdateProductDialogComponent implements OnInit {
     return ""
   }
 
-  onSave() {
+  onAddProduct() {
     if (this.productControl.invalid) {
       this.productControl.markAsTouched()
       return
@@ -48,9 +48,11 @@ export class AddUpdateProductDialogComponent implements OnInit {
     this.dialogRef.close(this.productOptions[this.productControl.value])
   }
 
+  clickCreateProduct() {
+    this.dialogRef.close(true)
+  }
+
   private initProductControl() {
-    if (this.product)
-      return new FormControl(null, [Validators.required])
     return new FormControl(null, [Validators.required])
   }
 }

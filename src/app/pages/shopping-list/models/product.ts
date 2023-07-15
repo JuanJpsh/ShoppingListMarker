@@ -24,6 +24,11 @@ export interface MarketProductNoDate extends ProductNoDate {
     state: "purchased" | "listed"
 }
 
+export type productToSave = Pick<ProductResponse, 'name' | 'price' | 'providerId'>
+export interface productToSaveProvider extends productToSave {
+    providerName: string
+}
+
 export interface Products {
     listedProducts: MarketProductNoDate[]
     purchasedProducts: MarketProductNoDate[]

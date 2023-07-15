@@ -3,3 +3,5 @@ export interface Provider {
     id: number;
     name: string;
 }
+
+export type ProviderNoDate = Pick<Provider, 'id' | 'name' >

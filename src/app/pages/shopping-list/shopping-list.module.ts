@@ -10,13 +10,15 @@ import { PurchasedProductsListAreaComponent } from './components/purchased-produ
 import { AddUpdateProductDialogComponent } from './components/add-update-product-dialog/add-update-product-dialog.component';
 import { CardMaterialModule } from 'src/app/commons/modules/card-material.module';
 import { OtherComponentsMaterialModule } from 'src/app/commons/modules/other-components-material.mosule';
+import { CreateProductComponent } from './components/create-product/create-product.component';
 
 @NgModule({
   declarations: [
     ShoppingPageComponent,
     ShoppingListAreaComponent,
     PurchasedProductsListAreaComponent,
-    AddUpdateProductDialogComponent
+    AddUpdateProductDialogComponent,
+    CreateProductComponent
   ],
   imports: [
     CommonModule,

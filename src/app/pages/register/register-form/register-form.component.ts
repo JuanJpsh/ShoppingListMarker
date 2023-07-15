@@ -4,6 +4,7 @@ import { RegisterService } from '../service/register.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { notEqualPassword } from '../validators/password-confirmation';
+import { Dictionary } from 'src/app/core/models/dictionary';
 
 @Component({
   selector: 'app-register-form',
@@ -12,6 +13,13 @@ import { notEqualPassword } from '../validators/password-confirmation';
 })
 export class RegisterFormComponent {
   userDataForm!: FormGroup;
+  errorMessages: Dictionary = {
+    required: "Este campo es obligatorio",
+    notEqualPassword: "La contraseña no coincide",
+    minlength: "Este campo debe tener al menos 8 carácteres",
+    maxlength: "Este campo debe tener maximo 30 carácteres",
+    existUsername: "Este nombre de usuario ya existe"
+  }
 
   constructor(
     private registerSvc: RegisterService,
@@ -24,20 +32,10 @@ export class RegisterFormComponent {
   }
 
   getErrorMessage(contolName: string) {
-    const controlForm = this.userDataForm.get(contolName);
-    if (!controlForm) throw new Error(`contol name ${contolName} not found in the formGoup`)
-
-    if (controlForm.getError('required'))
-      return "Este campo es obligatorio"
-    else if (controlForm.getError('notEqualPassword'))
-      return "La contraseña no coincide"
-    else if (controlForm.getError("minlength"))
-      return "Este campo debe tener al menos 8 carácteres"
-    else if (controlForm.getError("maxlength"))
-      return "Este campo debe tener maximo 30 carácteres"
-    else if (controlForm.getError("existUsername"))
-      return "Este nombre de usuario ya existe"
-    return ""
+    const controlError = this.userDataForm.get(contolName)?.errors
+    if (!controlError) return ''
+    const error = Object.keys(controlError)[0]
+    return this.errorMessages[error]
   }
 
   submit() {
@@ -51,22 +49,24 @@ export class RegisterFormComponent {
       fullname,
       username,
       password
-    }).subscribe((resp) => {
-      if (resp){
-        this.snackBarSvc.dismiss();
-        this.router.navigate(['home'])
-      }
-      else {
-        this.userDataForm.get("username")?.setErrors({ existUsername: true })
-        this.snackBarSvc.open(
-          'Nombre de usuario ya existente, Intentelo con otro nuevamente',
-          undefined,
-          {
-            duration: 5000
-          }
-        )
-      }
-    })
+    }).subscribe(response => this.handleLoginResponse(response))
+  }
+
+  private handleLoginResponse($event: boolean) {
+    if ($event) {
+      this.snackBarSvc.dismiss();
+      this.router.navigate(['home'])
+    }
+    else {
+      this.userDataForm.get("username")?.setErrors({ existUsername: true })
+      this.snackBarSvc.open(
+        'Nombre de usuario ya existente, Intentelo con otro nuevamente',
+        undefined,
+        {
+          duration: 5000
+        }
+      )
+    }
   }
 
   private inituserDataForm() {

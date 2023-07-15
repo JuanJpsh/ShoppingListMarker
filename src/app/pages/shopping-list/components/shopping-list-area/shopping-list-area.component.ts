@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MarketProductNoDate, ProductNoDate, marketProductToUpdate } from '../../models/product';
+import { MarketProductNoDate, ProductNoDate, marketProductToUpdate, productToSaveProvider } from '../../models/product';
 import { ProductService } from '../../services/product.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddUpdateProductDialogComponent } from '../add-update-product-dialog/add-update-product-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { mergeMap, of } from 'rxjs';
+import { CreateProductComponent } from '../create-product/create-product.component';
 
 @Component({
   selector: 'app-shopping-list-area',
@@ -24,16 +25,21 @@ export class ShoppingListAreaComponent {
 
   openAddMarketDialog() {
     this._dialog.open(AddUpdateProductDialogComponent).afterClosed().pipe(
-      mergeMap((product: ProductNoDate) => {
-        if (!product)
+      mergeMap((dialogResponse: ProductNoDate | true | MarketProductNoDate) => {
+        if (!dialogResponse)
           return of(null)
-        const marketId = Number.parseInt(this.route.snapshot.params['id'])
-        return this.productSvc.addProductToList(marketId, product)
+        else if (dialogResponse == true) {
+          return this.openCretateProductDialog()
+        }
+        else {
+          const marketId = Number.parseInt(this.route.snapshot.params['id'])
+          return this.productSvc.addProductToList(marketId, dialogResponse)
+        }
       })
     ).subscribe(
-      (resp) => {
-        if (resp)
-          this.products.push(resp)
+      (response) => {
+        if (response)
+          this.products.push(response as MarketProductNoDate)
       }
     )
   }
@@ -70,6 +76,35 @@ export class ShoppingListAreaComponent {
       resp => {
         this.products = this.products.filter((prod) => prod.marketProductId != _product.marketProductId)
       }
+    )
+  }
+
+  private openCretateProductDialog() {
+    return this._dialog.open(CreateProductComponent).afterClosed().pipe(
+      mergeMap((productToSave: productToSaveProvider) => {
+        if (!productToSave)
+          return of(null)
+        return this.createProduct(productToSave)
+      })
+    )
+  }
+
+  private createProduct(product: productToSaveProvider) {
+    return this.productSvc.createProduct({
+      name: product.name,
+      price: product.price,
+      providerId: product.providerId
+    }).pipe(
+      mergeMap(prod => {
+        const marketId = Number.parseInt(this.route.snapshot.params['id'])
+        const prodNoDate: ProductNoDate = {
+          id: prod.id,
+          name: prod.name,
+          price: prod.price,
+          providerName: product.providerName
+        }
+        return this.productSvc.addProductToList(marketId, prodNoDate)
+      })
     )
   }
 }

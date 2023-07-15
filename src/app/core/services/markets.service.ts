@@ -19,13 +19,17 @@ export class MarketsService {
   getMarkets() {
     if (this.markets$.getValue())
       return this.markets$ as BehaviorSubject<MarketNoUserId[]>
+    return this.getDataBaseMarkets()
+  }
+
+  private getDataBaseMarkets() {
     const userId = this.dataStorageSvc.getData(environmet.userIdKey) as string
     return this.http.get<MarketResponse[]>(`${this.url}?userId=${userId}`).pipe(
       take(1),
-      map<MarketResponse[], MarketNoUserId[]>((resp: MarketResponse[]) => resp.map((val) => ({
-        id: val.id,
-        name: val.name,
-        date: val.date
+      map<MarketResponse[], MarketNoUserId[]>(marketResponse => marketResponse.map((market) => ({
+        id: market.id,
+        name: market.name,
+        date: market.date
       }))
       ),
       map((resp: MarketNoUserId[]) => resp.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())),

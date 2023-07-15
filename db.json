@@ -137,15 +137,9 @@
     },
     {
       "marketId": 1,
-      "productId": 3,
-      "state": "listed",
+      "productId": 15,
+      "state": "purchased",
       "id": 2
-    },
-    {
-      "marketId": 1,
-      "productId": 4,
-      "state": "listed",
-      "id": 4
     }
   ],
   "providers": [
